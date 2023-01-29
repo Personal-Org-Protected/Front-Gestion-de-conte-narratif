@@ -1,0 +1,18 @@
+
+<section class="background vh-100">
+<div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-4" *ngFor="let item of (result$|async)?.userForfaits">
+        <div class="card mt-4" style="width: 18rem;" >
+    <img src="https://img.freepik.com/free-vector/abstract-colourful-background-kaleidoscope-effect_23-2148460308.jpg?w=2000" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{item.forfaitLibelle}}</h5>
+      <p class="card-text">Value: {{item.forfaitValue}}</p>
+      <p class="card-text">Reduction: {{item.reduction}}</p>
+         <a routerLink="/Public/forfait" class="btn mr-2"><fa-icon class="px-2" [icon]="faEye"></fa-icon>See other Forfeits</a>
+    </div>
+      </div>      
+  </div>
+    </div>
+    </div>
+</section>

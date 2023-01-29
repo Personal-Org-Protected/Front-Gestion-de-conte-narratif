@@ -1,0 +1,41 @@
+
+<section class="background vh-100">
+
+  <div class='container py-4'>
+    <div class="" *ngIf="result$!=null">
+      <a routerLink="../Histoire-creation"><button class="btn third"> Create</button></a>
+    </div>
+      <div class='center list flex-column'>
+        <div  *ngFor="let item of (result$|async)?.items;let i = index" class='card flex-row m-5' id="box{{i}}" (click)="onClickCard(i)">
+          <img *ngIf="imagePresent(item.url)" src='{{item.url}}' alt="No Image" class='book'>
+          <img *ngIf="!imagePresent(item.url)" src='../../../../assets/images/Question_Mark.jpg' alt="No Image" class='book'>
+          <div class='flex-column info'>
+            <div class='title'>{{item.nameStory}}</div>
+            <div class='author'>{{(resultAuthor$| async)?.username}}</div>
+            <div class='hidden bottom summary'>
+             {{item.sypnopsis}}
+            </div>
+          </div>
+          <div class='flex-column group'>
+            <div class='members'>
+              <span class='current' *ngIf="item.numberRef>0">nombre d'achat : {{item.numberRef}}</span> 
+              <span class='max'>{{item.price}} $</span>
+            </div>
+            <div class='hidden bottom d-flex'>
+              <a routerLink="../Histoire-details/{{item.idStoryTelling}}" class='simple'>Check</a>
+              <a routerLink="../Histoire-modification/{{item.idStoryTelling}}" class='modify'>Update</a>
+            </div>
+          </div>
+          <div class="align-self-stretch">          <span *ngIf="!item.finished"  class="btn-flip" data-back="Ongoing" data-front="Status"></span>
+            <span *ngIf="item.finished" class="btn-flip" data-back="Finished" data-front="State"></span></div>
+        </div>
+           
+      </div>
+    </div>
+    
+  </section>
+  <mat-paginator #paginator [length]="(result$|async)?.totalCount"
+  [pageSize]="3"
+  aria-label="Select page"
+  (page)="handlePageEvent($event)">
+  </mat-paginator>

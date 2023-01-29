@@ -1,0 +1,78 @@
+
+    <section class="wrapper background vh-100 d-flex">
+
+        <div class=" col-md-2 d-flex justify-content-center scroll">
+            <div class="w-75 d-flex justify-content-center ">
+                <a  *ngFor="let item of resultTag$" class="my-2"><button *ngIf="(item|async) as tag" (click)="getBooks(tag.idTag)" class=" btn third"> {{(item|async)?.nameTag}}</button></a>
+              <!-- <a  *ngFor="let item of Tags" class=""><button (click)="getBooks(item.idTag)" class=" btn third"> {{item.nameTag}}</button></a> -->  
+            </div>
+        </div>
+
+        <div class="container d-flex flex-wrap py-5">
+
+        <div class="card mx-3" data-effect="zoom" *ngFor="let item of StoryTells; let i = index">
+          <a routerLink="../Transaction-process/{{item.idStoryTelling}}" class="card__save  js-save" >
+            <fa-icon class="" [icon]="faMoneyBill"></fa-icon>
+          </a>
+          <figure  class="card__image">
+            <img src="{{item.url}}" alt="Short description">
+          </figure>
+          <div class="card__header">
+          </div>
+          <div class="card__body">
+            <h3 class="card__name">{{item.nameStory}}</h3>
+            <p class="card__job">Written by {{item.author.username}}</p>
+            <p class="card__bio"> {{item.sypnopsis.substring(0,20)}}...</p>
+          </div>
+          <div class="card__footer">
+            <p class="card__date">{{item.dateCreation}}</p>
+            <p class="mx-3">{{(resultTag$[i]|async)?.nameTag}}</p>
+          </div>
+        </div>
+    </div>
+      </section>
+<mat-paginator #paginator [length]="(Result$|async)?.totalCount"
+[pageSize]="10"
+aria-label="Select page"
+(page)="handlePageEvent($event)">
+</mat-paginator> 
+
+
+
+
+<!-- <div class="message" *ngIf="StoryTells.length==0"><h1>No Book Available yet</h1> </div>
+<div *ngIf="StoryTells.length>0" class="container box d-flex  flex-wrap py-5 ">
+    <div class="post" *ngFor="let item of StoryTells">
+        <div class="header_post">
+            <img src="{{item.url}}" alt="">
+            <img *ngIf="item.url==null" src="/src/assets/images/question-mark-black-monochrome-white.png" alt="">
+        </div>
+
+        <div class="body_post">
+            <div class="post_content">
+
+                <h1>{{item.nameStory}}</h1>
+                <p>{{item.sypnopsis.substring(0,50)}}...</p>
+
+                <div class="container_infos">
+                    <div class="postedBy">
+                        <span>Written by </span>
+                        {{item.author.username}}
+                    </div>
+
+                    <div class="container_tags">
+                        <span>tags</span>
+                        <div class="tags">
+                            <ul>
+                                <li>tag</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div> -->

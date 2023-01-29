@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>your gallery of image :</h1>
+<div class="text-danger"  mat-dialog-content>
+    
+ <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&display=swap" rel="stylesheet">
+
+<div class="gallery" >
+	<div class="gallery__column" *ngFor="let item of Images;let i=index">
+		<a (click)="chosenImage(item)" target="_blank" class="gallery__link">
+			<figure class="gallery__thumb">
+				<img src="{{item.uri}}" alt="{{item.descriptionImage}}" class="gallery__image">
+				<figcaption class="gallery__caption">{{item.descriptionImage}}</figcaption>
+			</figure>
+		</a>
+	</div>
+
+	
+</div>
+</div>
+<div mat-dialog-actions>
+</div>
+<mat-paginator class="w-100" #paginator [length]="(resultImage$|async)?.totalCount"
+[pageSize]="5"
+aria-label="Select page"
+(page)="handlePageEvent($event)">
+</mat-paginator>

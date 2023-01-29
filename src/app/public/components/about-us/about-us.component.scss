@@ -1,0 +1,100 @@
+.header_bg {
+    background: linear-gradient(205deg, rgba(179,123,123,1) 22%, rgba(93,10,152,0.9471989479385504) 70%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.header {
+    background: transparent;
+    width: 100%;
+    padding: 40px 40px 40px 40px;
+}
+
+.logo a {
+    font-size: 40px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 40px;
+}
+
+.banner_main {
+    background: transparent;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 90px;
+}
+.d_flex {display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+}
+.text-bg {
+    max-width: 542px;
+    float: right;
+    width: 100%;
+}
+
+.text-bg h1 {
+    color: #ffffff;
+    font-size: 60px;
+    line-height: 70px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.text-bg span {
+    color: #fff;
+    font-size: 50px;
+    line-height: 55px;
+    font-weight: 500;
+}
+
+.text-bg p {
+    color: #fff;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 28px;
+    padding: 40px 0;
+}
+
+.text-bg a {
+    font-size: 16px;
+    background-color: #1f1716;
+    color: #fff;
+    padding: 10px 0px;
+    width: 100%;
+    max-width: 190px;
+    text-align: center;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 25px;
+}
+
+.text-bg a:hover {
+    background-color: #5502bb;
+    color: #fff;
+}
+
+.text-img figure {
+    margin: 30px;
+}
+
+.text-img figure img {
+    width: 100%;
+}
+
+.titlepage {
+    text-align: center;
+    padding-bottom: 60px;
+}
+
+.titlepage h2 {
+    font-size: 50px;
+    color: #6e6d70;
+    line-height: 60px;
+    padding: 0;
+}
+
+

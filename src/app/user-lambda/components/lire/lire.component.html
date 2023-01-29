@@ -1,0 +1,27 @@
+
+  <link href="https://fonts.googleapis.com/css?family=Lovers+Quarrel" rel="stylesheet">
+
+<section class="vh-100 background">
+  <div class="container d-flex justify-content-center ">
+    <div class=" d-flex flex-row ">
+      <div class=" hidden previous"  (click)="changePage(Chapter!.order-1)">Previous page</div>
+      <div class="py-4">
+        <button class="book" >
+            <div class="text">
+             <h1 *ngIf="Chapter!.order==1">Prologue</h1>
+             <h3 id="title" class="title-display"> {{(resultStory$|async)?.nomStory}}</h3>
+             <h2>Chapter {{Chapter!.order}}</h2>
+                <p id="content">
+                   {{(resultStory$|async)?.textStory}} 
+                </p> 
+            </div>
+           </button>
+          </div>
+           <div class=" hidden next"   (click)="changePage(Chapter!.order+1)">Next page</div>
+    </div>
+
+
+</div>
+
+</section>
+

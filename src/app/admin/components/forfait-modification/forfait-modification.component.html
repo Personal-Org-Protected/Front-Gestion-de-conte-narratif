@@ -1,0 +1,63 @@
+<div class="container-fluid px-1 py-5 mx-auto background">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div class="card">
+              <h2 class="mb-5">The data Form to update a forfeit</h2>
+                <form [formGroup]="ForfaitForm">
+                    <div class="row d-flex justify-content-center text-left">
+                      <div class="col-sm-6 flex-column d-flex">
+                        <label for="idForfait">IdForfait</label>
+                            <input type="text" id="idForfait" name="idForfait" formControlName="idForfait" >
+                    </div>
+                        <div class="col-sm-6 flex-column d-flex">
+                            <label for="forfaitLibelle">Libelle</label>
+                            <div class="validationText" *ngIf="Libelle?.invalid && Libelle?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="Libelle?.errors?.['maxlength']">
+                                Entry should not go over 20 character
+                              </div>
+                            </div>
+                                <input type="text" id="forfaitLibelle" name="forfaitLibelle" formControlName="forfaitLibelle" >
+                        </div>
+                          <div class=" col-sm-6 flex-column d-flex">
+                              <label for="forfaitValue">Value</label>
+                          <div class="validationText" *ngIf="Value?.invalid && Value?.touched ">
+                            <span>
+                              Entry not valid
+                            </span>
+                          </div>
+                              <input type="text" id="forfaitValue" name="forfaitValue" formControlName="forfaitValue" >
+                          </div>
+                          <div class=" col-sm-6 flex-column d-flex">
+                              <label for="reduction">Reduction ratio </label>
+                          <div class="validationText" *ngIf="Reduction?.invalid && Reduction?.touched ">
+                            <span>
+                              Entry not valid
+                            </span>
+                          </div>
+                              <input type="text" id="reduction" name="reduction" formControlName="reduction" >
+                          </div>
+                    </div>
+  
+                      <div class="d-flex justify-content-center text-left">
+                        <label for="isForAuthor">Is it for Author </label>
+                        <input type="checkbox" id="isForAuthor" name="isForAuthor" formControlName="isForAuthor" value="false">
+                      </div>
+                      <div class="d-flex justify-content-center text-left">
+                          <label for="idRole">Role </label>
+                          <select id="idRole" name="idRole" formControlName="idRole">
+                            <option value="2">User-lambda</option>
+                            <option value="3">Author</option>
+                          </select>
+                      </div>
+                </form>
+                <div class=" d-flex flex-row-reverse m-1" >
+                  <button (click)="resetPage()" class="m-2 btn" >Reset</button>
+                  <button [disabled]="ForfaitForm.invalid" (click)="onSubmit()" class="m-2 btn" >{{ActionBtn}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

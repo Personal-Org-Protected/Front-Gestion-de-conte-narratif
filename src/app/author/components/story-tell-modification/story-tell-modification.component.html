@@ -1,0 +1,64 @@
+<div class="container-fluid px-1 py-5 mx-auto background">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div class="card">
+              <h2 class="mb-5">The data Form to update a forfeit</h2>
+                <form [formGroup]="StoryTellForm">
+                    <div class="row d-flex justify-content-center text-left">
+                        <div class="col-sm-6 flex-column d-flex">
+                            <label for="nameStory">Story Name</label>
+                            <div class="validationText" *ngIf="nameStory?.invalid && nameStory?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="nameStory?.errors?.['maxlength']">
+                                Entry should not go over 40 character
+                              </div>
+                            </div>
+                                <input type="text" id="nameStory" name="nameStory" formControlName="nameStory" >
+                        </div>
+                          <div class=" col-sm-6 flex-column d-flex">
+                              <label for="url">url</label>
+                          <div class="validationText" *ngIf="url?.invalid && url?.touched ">
+                            <span>
+                              Entry not valid
+                            </span>
+                          </div>
+                              <input type="text" id="url" name="url" formControlName="url" >
+                          </div>
+                          <div class=" col-sm-6 flex-column d-flex">
+                              <label for="price">Price</label>
+                          <div class="validationText" *ngIf="price?.invalid && price?.touched ">
+                            <span>
+                              Entry not valid
+                            </span>
+                          </div>
+                              <input type="text" id="price" name="price" formControlName="price" >
+                          </div>
+                            <div class=" col-sm-6 flex-column d-flex">
+                                <label for="synopsis">Synopsis</label>
+                            <div class="validationText" *ngIf="synopsis?.invalid && synopsis?.touched ">
+                              <span>
+                                Entry not valid
+                              </span>
+                            </div>
+                            <textarea type="text" id="synopsis" name="synopsis" formControlName="synopsis"  cols="30" rows="5"></textarea>
+                            </div>
+                    </div>
+
+         
+                      <div class="d-flex justify-content-center text-left">
+                            <label for="idTag">Tag </label>
+                            <select id="idTag" name="idTag" formControlName="idTag" *ngFor="let tag of (resultTags$|async)?.items">
+                              <option [value]="tag.idTag">{{tag.nameTag}}</option>
+                            </select>
+                        </div>
+                </form>
+                <div class=" d-flex flex-row-reverse m-1" >
+                  <button (click)="resetPage()" class="m-2 btn" >Reset</button>
+                  <button [disabled]="StoryTellForm.invalid" (click)="onSubmit()" class="m-2 btn" >{{ActionBtn}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

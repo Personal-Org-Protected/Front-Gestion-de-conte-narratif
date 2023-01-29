@@ -1,0 +1,34 @@
+
+  
+  
+  .background{
+    background: rgb(255,120,88);
+    background: linear-gradient(205deg, rgba(255,120,88,0.9584034297312675) 29%, rgba(152,10,137,0.8883754185267857) 54%, rgba(235,177,84,0.9696079115239846) 86%);
+  }
+  .card {
+    background: #222;
+    border: 1px solid #dd2476;
+    color: rgba(250, 250, 250, 0.8);
+    margin-bottom: 2rem;
+  }
+  
+  .btn {
+    border: 5px solid;
+    color: #dd2476;
+    border-image-slice: 1;
+    background: rgb(255,64,0);
+    background: linear-gradient(205deg, rgba(255,64,0,0.9079832616640406) 9%, rgba(157,132,255,0.8883754185267857) 57%, rgba(251,145,227,0.9696079115239846) 86%); 
+    -webkit-text-fill-color: transparent !important;
+    border-image-source:  var(--gradient) !important; 
+    text-decoration: none;
+    transition: all .4s ease;
+  }
+  
+  .btn:hover, .btn:focus {
+    background: rgb(255,64,0);
+    background: linear-gradient(205deg, rgba(255,64,0,0.9079832616640406) 9%, rgba(157,132,255,0.8883754185267857) 57%, rgba(251,145,227,0.9696079115239846) 86%); 
+    -webkit-text-fill-color: rgb(180, 227, 248) !important;
+    border: 5px solid #fff !important; 
+    box-shadow: #222 1px 0 10px;
+    text-decoration: underline;
+  }

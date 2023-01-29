@@ -1,0 +1,5 @@
+{
+    "default" : {
+    "uri":"https://localhost:7031/api/v1/"
+    }
+}

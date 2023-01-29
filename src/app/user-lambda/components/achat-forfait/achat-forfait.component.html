@@ -1,0 +1,65 @@
+<section class="vh-100 background">
+    <div class="container d-flex py-5 ">
+        <div class="box-1 bg-light user">
+            <div class="d-flex align-items-center mb-3">
+                <img src="https://img.freepik.com/free-vector/abstract-colourful-background-kaleidoscope-effect_23-2148460308.jpg?w=2000"
+                    class="pic rounded-circle" alt="">
+                <p class="ps-2 name">{{Forfait.idForfait}}</p>
+            </div>
+            <div class="box-inner-1 pb-3 mb-3 ">
+                <div class="d-flex justify-content-between mb-3 userdetails">
+                    <p class="fw-bold">{{Forfait.forfaitLibelle}}</p>
+                </div>
+                <div id="my" class="carousel slide carousel-fade img-details" data-bs-ride="carousel"
+                    data-bs-interval="2000">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="https://img.freepik.com/free-vector/abstract-colourful-background-kaleidoscope-effect_23-2148460308.jpg?w=2000"
+                                class="d-block w-100">
+                        </div>
+    <!-- mettre autatn dimage que voulu -->
+                    </div>
+    
+                </div>
+                <h3>Reduction</h3>
+                <p class="dis info my-3">{{Forfait.reduction}}
+                </p>
+            </div>
+        </div>
+    
+    
+        <div class="box-2">
+            <div class="box-inner-2">
+                <div>
+                    <p class="fw-bold">Payment Details</p>
+                    <p class="dis mb-3">Complete your purchase by providing your payment details</p>
+                </div>
+    
+                    <div class="mb-3">
+                        <p class="dis fw-bold mb-2">Email address</p>
+                        <input disabled class="" type="email" [value]="User.email">
+                    </div>
+                    <div>
+                        <div class="my-3 cardname">
+                            <p class="dis fw-bold mb-2">Buyer name</p>
+                            <input disabled class="" type="text" [value]="User.username">
+                        </div>
+                        <div class="address">
+                            <p class="dis fw-bold mb-2">Region</p>
+                                <input disabled type="text" [value]="User.location">
+    
+                            <div class="d-flex flex-column dis py-4">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <p class="fw-bold">Total</p>
+                                    <p class="fw-bold"><span ></span>{{Forfait.forfaitValue}}</p>
+                                </div>
+                                <div (click)="BuyForfait(Forfait.idForfait)" class="btn btn-primary mt-2">Pay
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+            </div>
+        </div>
+    </div>
+    </section>

@@ -1,0 +1,38 @@
+<section class="background vh-100">
+    <div class="container py-5">
+      <div class="" *ngIf="result$!=null">
+        <a routerLink="../../Chapitre-creation/{{ParamRoute$}}"><button class="btn third"> Create</button></a>
+      </div>
+        <ul class="list-group m-4" *ngFor="let item of Chapters;let i=index">
+          <li class="list-group-item clearfix m-1">
+            <div class="container d-flex">
+              <div class="column" (click)="openDialog(item.idChapitre)"><img class="img-responsive img-rounded" src="{{(Images[i]|async)?.uri}}" alt=""/></div>
+              <div class="w-100">
+                <h3 class="list-group-item-heading">
+                  {{(Narrations[i]|async)!.nomStory}}
+                    <span *ngIf="(Narrations[i]|async)!.dateCreation" class="label pull-right"> crée le {{(Narrations[i]|async)!.dateModif}}</span>
+                    <!-- <span *ngIf="item.story.dateModif" class="label pull-right"> modifié le {{item.story.dateModif}}</span>  -->
+
+                </h3>
+                <p class="list-group-item-text lead">
+                  {{(Narrations[i]|async)!.textStory.substring(0,30)}}...
+                  <br />
+                </p>
+
+                  <div class="d-flex justify-content-end">
+                    <a routerLink="../../Chapitre-view/{{item.idChapitre}}" title="View" class=" px-2"><fa-icon class=" " [icon]="faEye"></fa-icon></a> 
+                    <a (click)="deleteChapitre(item.idChapitre)" title="Delete" class="px-2"><fa-icon class="text-danger " [icon]="faTrash"></fa-icon></a>
+                </div>
+              </div>
+            </div>
+          </li>
+       
+        </ul>
+      </div>
+</section>
+
+<mat-paginator #paginator [length]="(result$|async)?.totalCount"
+[pageSize]="4"
+aria-label="Select page"
+(page)="handlePageEvent($event)">
+</mat-paginator>

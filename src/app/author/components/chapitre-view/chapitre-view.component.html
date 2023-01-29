@@ -1,0 +1,18 @@
+<section class=" vh-100 background p-5">
+    <div class="container d-flex justify-content-center ">
+        <div class="row">
+            <button class="book" >
+                <div class="text" >
+                 <h1 *ngIf="(resultChapter$|async)?.order==1">Prologue</h1>
+                 <h3 id="title" (click)="FormMode()" class="title-display"> {{(resultStory$|async)?.nomStory}}</h3>
+                 <h2>Chapter {{(resultChapter$|async)?.order}}</h2>
+                    <p id="content"  (click)="FormMode()">
+                       {{(resultStory$|async)?.textStory}} 
+                    
+                    </p>   <button [disabled]="StoryForm.invalid" (click)="backToOriginal()" *ngIf="isTexteArea && isInput" class="btn btn-primary">Done</button>
+                </div>
+               </button>
+        </div>
+
+    </div>
+</section>

@@ -1,0 +1,40 @@
+
+<section class="background vh-100">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="">
+                    <div class="table-responsive">
+                        <table class="table project-list-table table-nowrap align-middle table-borderless">
+                            <thead>
+                                <tr>
+    
+                                    <th scope="col">Story Ref</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Date of transaction</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of (result$|async)?.items">
+                                    <td>  <p>{{item.nameBook}} </p>  <p href="#" class="text-body"> {{item.storyTellId}}</p></td>
+                                    <td><span class="badge badge-soft-success mb-0">{{item.price}}</span></td>
+                                    <td>{{item.dateTransaction}}</td>                                    
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    
+    </section>
+
+    
+<mat-paginator #paginator [length]="(result$|async)?.totalCount"
+[pageSize]="30"
+aria-label="Select page"
+(page)="handlePageEvent($event)">
+</mat-paginator>

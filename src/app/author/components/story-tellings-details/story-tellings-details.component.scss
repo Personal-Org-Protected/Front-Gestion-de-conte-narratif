@@ -1,0 +1,134 @@
+
+//commentary Zone
+.background{
+  background: rgb(255,64,0);
+  background: linear-gradient(205deg, rgba(255,64,0,0.9079832616640406) 15%, rgba(125,43,223,0.8883754185267857) 42%, rgba(255,52,110,0.9696079115239846) 86%); 
+}
+.date{font-size: 11px}.comment-text{font-size: 12px}.fs-12{font-size: 12px}.shadow-none{box-shadow: none}.name{color: #007bff}.cursor:hover{color: blue}.cursor{cursor: pointer}.textarea{resize: none}
+
+//card StoryTell
+
+.right-border-custom{
+
+  background: linear-gradient(to right bottom,#0b0b2c,#23235e)
+}
+.gradient-custom {
+  
+  /* fallback for old browsers */
+  background: #f6d365;
+  
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right bottom,#0b0b2c,#23235e);
+  
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right bottom,#0b0b2c,#23235e);
+  }
+
+  p{
+      font-style: normal;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: 400;
+  }
+
+  h1,h2,h3,h4,h5,h6{
+      font-size: medium;
+      font-style:oblique;
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: 600;
+      color: rgb(255, 255, 255);
+  }
+
+  .display{
+      display: inline-block;
+  }
+
+  a{
+      color: crimson;
+  }
+
+  .response{
+      color: rgb(214, 18, 116);
+      font-weight: 300;
+      font-size:medium;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  img{
+    height: auto ;
+    width: auto ;
+  }
+
+  .formcontainer{
+    overflow: scroll;
+  }
+
+  .finished{
+color:aliceblue;
+background-color: #DC143C
+
+  }
+
+
+
+
+
+
+  //------------------------------------------------
+
+
+  @import url(https://fonts.googleapis.com/css?family=Six+Caps);
+
+  
+
+  .commentSection{
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overflow-y: scroll;
+  }
+ a {
+    color: #999;
+    text-decoration: none;
+  }
+  
+  .fancy-list {
+    list-style: none;
+    padding: 0.5em;
+    margin: 0;
+  }
+  
+  .fancy-list > div {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+    border-bottom: 1px solid #333;
+    line-height: 1;
+  }
+  
+  
+  .fancytexthover {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .fancytexthover:hover .textwrapper {
+    width: 10%;
+  }
+  
+  .textwrapper {
+    display: inline-block;
+    overflow: hidden;
+    width: 0;
+    display: inline-block;
+    white-space: pre;
+    color: rgb(252, 56, 154);
+    background-color:#23235e;
+    transition: width 1s;
+    border-bottom: 1px solid;
+    padding-bottom: 0.15em;
+  }
+  
+  .textwrapper a {
+    color: inherit;
+  }
+  
+  

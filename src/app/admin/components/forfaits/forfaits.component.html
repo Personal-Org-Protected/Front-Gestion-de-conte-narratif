@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+
+<section class="background vh-100">
+  <div class="container py-5">
+    <div *ngIf="result$!=null">
+      <a routerLink="../Forfait-creation"><div class="btn w-25">Create</div></a>
+    </div>
+        <div class="row d-flex justify-content-center">
+          <div class="col-4" *ngFor="let item of (result$ | async)?.items">
+            <div class="card mt-4" style="width: 18rem;">
+        <img src="https://img.freepik.com/free-vector/abstract-colourful-background-kaleidoscope-effect_23-2148460308.jpg?w=2000" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h3 class="card-title">{{item.forfaitLibelle}}</h3>
+          <p class="card-text">Prix : {{item.forfaitValue}}</p>
+          <p class="card-text">Reduction : {{item.reduction}}</p>
+             <!-- <a *ngIf="false" routerLink="/Public/Forfait" class="btn mr-2"><i class="fa-solid fa-eye"></i>Acheter</a> -->
+        </div>
+          <div class="d-flex flex-row-reverse m-1">
+            <div (click)="deleteForfait(item.idForfait)" class="btn m-2">Delete</div>
+            <a routerLink="../Forfait-modification/{{item.idForfait}}"><div class="btn m-2">Update</div></a>
+        </div>
+          </div>      
+      </div>
+        </div>
+
+        </div>
+    </section>
+    <mat-paginator #paginator [length]="(result$|async)?.totalCount"
+    [pageSize]="5"
+    aria-label="Select page"
+    (page)="handlePageEvent($event)">
+</mat-paginator>

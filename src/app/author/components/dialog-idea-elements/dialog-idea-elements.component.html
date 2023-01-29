@@ -1,0 +1,29 @@
+
+  <form [formGroup]="IdeaPostformgroup">
+<h1 mat-dialog-title>Ideas :</h1>
+<div class="text-danger"  mat-dialog-content>
+    <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Idea</th>
+        <!-- <th>Edit</th> -->
+        <th>Delete</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Ideas$;let i=index">
+        <td><div><input #inp  (change)="edit(item.idIdee,inp.value)" [value]="item.idea" type="text"  ></div></td>
+        <!-- <td><a (click)="edit(i,item.idIdee)" class="px-3"><fa-icon [icon]="faEdit"></fa-icon></a></td> -->
+        <td><a (click)="delete(item.idIdee)" class="px-3"><fa-icon class="" [icon]="faTrash"></fa-icon></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div mat-dialog-actions>
+    <a  (click)="add()"><fa-icon class="btn" [icon]="faAdd"></fa-icon></a><input (click)="disable()" [disabled]="Disable" formControlName="idea" type="text">
+</div>
+</form>
+
+
+

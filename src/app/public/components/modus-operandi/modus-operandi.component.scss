@@ -1,0 +1,75 @@
+.Body{
+    background: linear-gradient(205deg, rgba(179,123,123,1) 22%, rgba(93,10,152,0.9471989479385504) 70%);
+  }
+.glass{
+    margin: 25px;
+    background:rgb(119, 15, 15);
+    min-height: 80vh;
+    width: 60%;
+    background: linear-gradient(to right top,rgba(107, 0, 93, 0.7),rgba(179,123,123,0.3) 70%);
+    border-radius: 20px;
+    border-collapse:collapse;
+    border-style: solid;
+    border-color: rgb(86, 49, 87);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60%;
+    opacity: 0.9;
+    backdrop-filter: blur(2rem) saturate(80%) contrast(100%);
+}
+
+.Board{
+    flex: 2;
+}
+
+
+
+
+/*games status*/
+
+
+.Board{
+
+    margin: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.card{
+    display: flex;
+    background: linear-gradient(to right top,rgba(170, 0, 204, 0.8),rgb(189, 107, 107) 72%);
+    border-radius: 1rem;
+    margin: 2rem 0rem;
+    padding: 2rem;
+    box-shadow: 7px 7px 15px rgba(84, 1, 161, 0.6);
+    justify-content: space-between;
+}
+.card:hover{
+    background: linear-gradient(to left top,rgba(64, 1, 66, 0.8),rgba(206, 60, 250, 0.4));
+    transform:translateX(15px) scale(1.2); 
+    box-shadow: 5px 5px 20px rgba(57, 0, 131, 0.8);
+    transition: ease-in-out;
+
+}
+
+
+.circle1,.circle2{
+    z-index: 0;
+    background:white;
+    background: linear-gradient(205deg, rgba(179,123,123,1) 22%, rgba(93,10,152,0.9471989479385504) 75%);
+    height: 20rem;
+    width: 20rem;
+    position: absolute;
+    border-radius:50% ;
+}
+.circle1{
+top:5%;
+right:15%;
+}
+.circle2{
+bottom: 5%;
+left:10%;
+
+}

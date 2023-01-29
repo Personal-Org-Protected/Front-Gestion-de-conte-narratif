@@ -1,0 +1,6 @@
+{
+    "domain": "dev-dlblb59r.us.auth0.com",
+    "clientId": "idIq4TXVcWbrUmi2KE7O3SCxY8OjIma9",
+    "cacheLocation":"localstorage",
+    "audience":"https://localhost:7031"
+}

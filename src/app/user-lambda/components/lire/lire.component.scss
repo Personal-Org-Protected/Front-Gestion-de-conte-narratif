@@ -1,0 +1,265 @@
+.background{
+    background: rgb(252,192,85);
+    background: linear-gradient(17deg, rgba(252,192,85,1) 12%, rgba(236,51,105,1) 51%, rgba(89,56,145,0.9135855025603992) 85%); 
+    overflow: hidden;
+}
+
+
+
+.title-display{
+	display: flex;
+	justify-content: center;
+	font-weight: 500;
+	font-size: larger;
+	font-style: italic;
+  }
+	 *,
+	 *::before,
+	 *::after {
+	  box-sizing: border-box;
+	 }
+	 
+	 .book {
+  /*         //openright
+		  -webkit-transform: scaleX(-1);
+		  transform: scaleX(-1);
+	  //openright */
+	  --url:url("../../../../assets/images/Question_Mark.jpg");
+	  width: 200px;
+	  height: 200px;
+	  cursor: pointer;
+	  border-radius: 20px;
+	  background: white;
+	  padding: 0;
+	  margin: 0;
+	  border: none;
+	  transform-style: preserve-3d;
+	  transition: all 0.5s ease-out;
+	  color: transparent;
+	  z-index: 9;
+	 }
+	 
+	 .book .text {
+	  overflow: hidden;
+	  width: 200px;
+	  height: 160px;
+	  padding: 0 15px 20px 15px;
+	  text-align: justify;
+	  line-height: 1.2em;
+	 }
+	 
+	 .book .text h1,
+	 .book .text h2 {
+	  text-align: center;
+	 }
+	 
+	 .book::before {
+	  content: "";
+	  top: 0;
+	  display: block;
+	  position: absolute;
+	  border-radius: 20px;
+	  width: 200px;
+	  height: 200px;
+	  background: #6d3acc;
+	  box-shadow: 50px 0 10px 0 inset #3a245e;
+	  transition: all 0.5s ease-out;
+	  transform-origin: 0 50%;
+	 }
+	 
+	 .book::after {
+	  content: "";
+	  display: block;
+	  position: absolute;
+	  width: 200px;
+	  height: 100px;
+	  border: 15px solid #3a245e;
+	  border-right: 10px solid black;
+	  border-top: none;
+	  border-radius: 30px/50%;
+	  background: repeating-linear-gradient(
+	   to bottom,
+	   white 0,
+	   white 2px,
+	   #bdc3c7 2px,
+	   #bdc3c7 4px,
+	   white 4px
+	  );
+	  top: 140px;
+	  z-index: -1;
+	  opacity: 0;
+	  animation: closed 0.5s ease-out forwards;
+	 }
+	 
+	 @keyframes closed {
+	  70% {
+	   opacity: 0;
+	  }
+	  100% {
+	   opacity: 1;
+	  }
+	 }
+	 
+	 .book.open {
+	  height: 240px;
+	  border-bottom: 5px solid #3a245e;
+	  border-right: 5px solid #6d3acc;
+	  border-top: 5px solid #6d3acc;
+	  border-radius: 0;
+	  color: black;
+	  
+	 }
+	 
+	 .book.open::before {
+	  transform: rotatey(-160deg) translatex(-20px);
+	background-color: #e7e7e7;
+	  box-shadow: 20px 0 10px 0 inset rgb(167, 166, 166);
+	  height: 235px;
+	  border-bottom: 5px solid #3a245e;
+	  border-right: 5px solid #3a245e;;
+	  border-top: 5px solid #6d3acc;
+	  border-radius: 0;
+	  background-image:var(--url);
+	  background-repeat: no-repeat;//ici pour mettre l'image
+	  background-position: center;
+	  background-size:80%;
+	  font-weight: bold;
+	  font-size: 1.3em;
+	  padding-top: 85px;
+  /*     //openright
+	  -webkit-transform: scaleX(-1);
+	  transform: scaleX(-1);
+  //openright */
+  
+	 }
+	 
+	 @keyframes opened {
+	  70% {
+		
+	   opacity: 0;
+	   transition: all 1s ease-in-out;
+	  }
+	  100% {
+		
+	   opacity: 1;
+	   border: none;
+	   height: 40px;
+	   width: 360px;
+	   border-radius: 0;
+	   transform: rotatex(60deg) translatey(120px) translatex(-165px);
+	   background: linear-gradient(
+		 to right,
+		 transparent 46%,
+		 #bdc3c7 47px,
+		 #bdc3c7 48px,
+		 transparent 49%
+		),
+		repeating-linear-gradient(
+		 to bottom,
+		 rgb(77, 17, 17) 0,
+		 white 2px,
+		 #bdc3c7 2px,
+		 #bdc3c7 4px,
+		 white 4px
+		);
+		
+	  }
+	  
+	 }
+	 
+	 .book.open::after {
+	  animation: opened 0.5s ease-out forwards;
+	  
+	 }
+	 
+	 .book.expanded {
+	  height: 80vh;// ici pour la page ouverte
+	  width: 30vw;
+	  transform: translateX(45%);
+  /*     //openright
+	  -webkit-transform: scaleX(-1);
+	  transform: scaleX(-1);
+  //openright */
+  
+	 }
+	 
+	 .book.expanded::before {
+	  height: 80vh;
+	  width: 30vw;
+	  font-size: 3.5em;
+	  padding-top: 40vh;
+	  overflow: hidden;
+	 }
+	 
+	 .book.expanded::after {
+	  animation: none;
+	  overflow: hidden;
+	 }
+	 
+	 .book.expanded .text {
+  /*     //openright
+	  -webkit-transform: scaleX(-1);
+	  transform: scaleX(-1);
+  //openright */
+	  scroll-behavior: smooth;
+	  scrollbar-width: none;
+	  overflow-y: scroll;
+	  width: 30vw;
+	  height: 75vh;
+	  padding: 0 30px 20px 30px;
+	  text-align: left;
+	  line-height: 1.7em;
+	  font-size: 1.5em;
+	 }
+  
+	 .book.expanded .text h1,
+	 .book.expanded .text h2 {
+	  margin-top: 2em;
+	 }
+	 
+
+
+	 .next{
+
+		background-color: #5e3b97;
+		text-align: center;
+		font-size: large;
+		font-weight: 600;
+		font-family: 'Times New Roman', Times, serif;
+		width:auto;
+		height: fit-content;
+		padding: 1rem;
+	position: absolute;
+	right:16.2%;
+	top:40%;
+	z-index: 0;
+	cursor: pointer;
+	color: rgb(189, 127, 221);
+	 }
+	 .previous{
+		background-color: #5e3b97;
+		text-align: center;
+		font-size: large;
+		font-weight: 600;
+		font-family: 'Times New Roman', Times, serif;
+		width: auto;
+		height: fit-content;
+		padding: 1rem;
+	position:absolute;
+	top:40%;
+	left: 15%;
+	z-index: 0;
+	cursor: pointer;
+	color: rgb(189, 127, 221);
+	 }
+
+	 .hidden{
+		opacity: 0;;
+		pointer-events: none;
+	 }
+
+	 .appear{
+		pointer-events:unset;
+opacity: 1;
+transition: all 1s ease-in-out;
+	 }

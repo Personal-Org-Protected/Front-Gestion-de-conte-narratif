@@ -1,0 +1,104 @@
+
+<section class="background vh-100">
+<div class="container-fluid px-1 py-5 mx-auto ">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div class="card">
+              <h2 class="mb-5">User form</h2>
+                <form [formGroup]="UserForm" >
+                    
+                    <div class="row d-flex justify-content-center  text-left mx-3">
+                        <div class="col-sm-6 flex-column d-flex ">
+                            <label for="username">Username</label>
+                            <div class="validationText" *ngIf="username?.invalid && username?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="username?.errors?.['maxlength']">
+                                Entry should not go over 20 character
+                              </div>
+                            </div>
+                                <input type="text" id="username" name="username" formControlName="username" required>
+                        </div>
+
+
+                        <div class="col-sm-6 flex-column d-flex">
+                            <label for="password">Password</label>
+                            <div class="validationText" *ngIf="password?.invalid && password?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="password?.errors?.['pattern'] || password?.errors?.['maxLength'] || password?.errors?.['minLength']">
+                                Entry should be like 'Something2*'
+                              </div>
+                            </div>
+                                <input type="text" id="password" name="password" formControlName="password" required>
+                        </div>
+
+                        <div class="col-sm-6 flex-column d-flex py-2">
+                            <label for="email">Email</label>
+                            <div class="validationText" *ngIf="email?.invalid && email?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="email?.errors?.['email']">
+                                Entry should be an eamil format :'username@boxmail.com'
+                              </div>
+                            </div>
+                                <input type="text" id="email" name="email" formControlName="email" required>
+                        </div>
+
+                        <div class="col-sm-6 flex-column d-flex py-2">
+                            <label for="location">Location</label>
+                            <div class="validationText" *ngIf="location?.invalid && location?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="location?.errors?.['maxlength']">
+                                Entry should not go over 20 character
+                              </div>
+                            </div>
+                                <input type="text" id="location" name="location" formControlName="location" required>
+                        </div>
+                        
+                          <div class=" col-sm-6 flex-column d-flex py-2">
+                              <label for="phoneNumber">Phone Number</label>
+                          <div class="validationText" *ngIf="phoneNumber?.invalid && phoneNumber?.touched ">
+                            <span>
+                              Entry not valid
+                            </span>
+
+                            <div *ngIf="phoneNumber?.errors?.['pattern']">
+                              Entry format not valid
+ 
+                            </div>
+                          </div>
+                              <input type="text" id="phoneNumber" name="phoneNumber" formControlName="phoneNumber">
+                          </div>
+
+                          <div class="col-sm-6 flex-column d-flex py-2">
+                            <label for="birthDate">BirthDate</label>
+                                <input type="date" id="birthDate" name="birthDate" formControlName="birthDate" required>
+                        </div>
+
+                          <div class=" col-sm-6 flex-column d-flex">
+                              <label for="description">Description</label>
+                          <div class="validationText" *ngIf="description?.invalid && description?.touched ">
+                            <span>
+                              Entry not valid
+                            </span>
+                          </div>
+                          <textarea type="text" id="description" name="description" formControlName="description"  cols="30" rows="5"></textarea>
+                          </div>
+
+                    </div>
+                </form>
+                <div class=" d-flex flex-row-reverse m-1" >
+                  <button (click)="resetPage()" class="m-2 btn" >Reset</button>
+                  <button [disabled]="UserForm.invalid"   (click)="onSubmit()" class="m-2 btn" >{{ActionBtn}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>

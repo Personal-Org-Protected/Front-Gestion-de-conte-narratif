@@ -1,0 +1,87 @@
+<section class="background vh-100">
+<div class="container   ">
+    <div class="row d-flex justify-content-center ">
+        <div class=" text-center">
+            <div class="card">
+              <h2 class="mb-5">The data Form to create a narration</h2> 
+                    <div class=" d-flex flex-row">
+                        <div class=" d-flex  col-sm-6 mx-2 justify-content-center">
+                            <div class="backGrid" (click)="openDialog()">
+                            <div>
+
+                              <img class="image_panel " src="{{ImageChoisi?.uri}}" alt="Choose an image"/>
+                              <label for="img" class="image_description py-1">{{ImageChoisi?.descriptionImage}}</label>
+                            </div>
+                              <!--   
+        
+                                    <section class="gallery w-100">
+                                        <div class="d-flex">
+                                            <div (click)="chosenImage(item.idImage)" class="col-sm-2 m-2" *ngFor="let item of Images;let i=index">
+                                                <input type="radio" id="img-{{i+1}}" checked name="gallery" class="gallery__selector"  />
+                                                <img class="gallery__img " src="{{item.uri}}" alt=""/>
+                                                <label for="img-{{i+1}}" class="gallery__thumb w-100"><img src="{{item.uri}}" alt=""/></label>
+                                        </div>
+                                        </div>
+                
+                
+                                    </section>
+                                    <div class="d-flex align-self-end w-100">
+                                        <mat-paginator class="w-100" #paginator [length]="(resultImage$|async)?.totalCount"
+                                        [pageSize]="5"
+                                        aria-label="Select page"
+                                        (page)="handlePageEvent($event)">
+                                        </mat-paginator>
+                            </div> -->
+                        </div>
+                        </div>
+                        <div class="col-sm-6 d-flex flex-column mx-2">
+                            <form [formGroup]="StoryForm">
+                        <div class=" flex-column d-flex">
+                            <label for="nomStory">Name of the Image</label>
+                            <div class="validationText" *ngIf="NomStory?.invalid && NomStory?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="NomStory?.errors?.['maxlength']">
+                                Entry should not go over 400 character
+                              </div>
+                              <div *ngIf="NomStory?.errors?.['minLength']">
+                                Entry should be lower than 20 character
+                              </div>
+                            </div>
+                                <input type="text" id="nomStory" name="nomStory" formControlName="nomStory" required>
+                        </div>
+                        
+
+                          <div class=" flex-column d-flex">
+                              <label for="textStory">Description Image</label>
+                          <div class="validationText" *ngIf="ContentStory?.invalid && ContentStory?.touched ">
+                            <span>
+                              Entry not valid
+                            </span>
+                          </div>
+                          <textarea type="text" id="textStory" name="textStory" formControlName="textStory"   rows="20"></textarea>
+                          </div>
+                          
+                <div class=" d-flex flex-row-reverse m-1" >
+                  <button (click)="resetPage()" class="m-2 btn" >Reset</button>
+                  <button  [disabled]="StoryForm.invalid || !isImageChosen" (click)="onSubmit()" class="m-2 btn" >{{ActionBtn}}</button>
+                </div>
+                        </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+<ul class="grid w-100">
+    <li>
+        <input type="checkbox"><img src="" alt="">
+        <img type="checkbox" src="https://picsum.photos/300/200/?random" alt="">
+        <figcaption>Vehicula Quam Nibh</figcaption>
+
+    </li>
+  </ul> -->

@@ -1,0 +1,38 @@
+<div class="container-fluid px-1 py-5 mx-auto background vh-100">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <div class="card">
+              <h2 class="mb-5">The data Form to create a forfeit</h2>
+                <form [formGroup]="TagForm" >
+                    <div class="row d-flex justify-content-center text-left">
+                      <div class="col-sm-6 flex-column d-flex">
+                        <label for="nameTag">Id</label>
+                        <div class="validationText" *ngIf="id?.invalid && id?.touched">
+                          <span>
+                            Entry not valid
+                          </span>
+                        </div>
+                            <input type="text" id="idTag" name="idTag" formControlName="idTag">
+                    </div>
+                        <div class="col-sm-6 flex-column d-flex">
+                            <label for="nameTag">Libelle</label>
+                            <div class="validationText" *ngIf="nameTag?.invalid && nameTag?.touched">
+                              <span>
+                                Entry not valid
+                              </span>
+                              <div *ngIf="nameTag?.errors?.['maxlength']">
+                                Entry should not go over 20 character
+                              </div>
+                            </div>
+                                <input type="text" id="nameTag" name="nameTag" formControlName="nameTag">
+                        </div>
+                    </div>
+                </form>
+                <div class=" d-flex flex-row-reverse m-1" >
+                  <button (click)="resetPage()" class="m-2 btn" >Reset</button>
+                  <button [disabled]="TagForm.invalid" (click)="onSubmit()" class="m-2 btn" >{{ActionBtn}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

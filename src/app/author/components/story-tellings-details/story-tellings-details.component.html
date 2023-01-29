@@ -1,0 +1,126 @@
+
+<section class="vh-50 background">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-lg-8 mb-4 mb-lg-0">
+        <div class="card mb-3" style="border-radius: .5rem;">
+          <div class="g-0 d-flex flex-row">
+            <div class=" col-md-4 gradient-custom text-center text-white d-flex flex-column justify-content-center">
+              <div class="d-flex justify-content-center align-self-center col-md-8">
+                <img ngClass="w-100" *ngIf="imagePresent(resultDetails$.url)" src="{{resultDetails$.url}}"
+                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                <img ngClass="w-100" *ngIf="!imagePresent(resultDetails$.url)" src="../../../../assets/images/Question_Mark.jpg"
+                alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+              </div>
+              <h5>Histoire :</h5> <p class="response">{{resultDetails$.nameStory}}</p>
+              <div><h3>Tag :</h3><div><p class="response">{{resultTag$.nameTag}}</p></div></div>
+              
+              <!-- <a  href="/Private/Admin/"> <i class="fa fa-edit text-edit"></i></a>  -->
+            </div>
+            <div class="col-md-8 right-border-custom ">
+              <div class="fancy-list">             
+                 <div class="d-flex justify-content-end fancytexthover">
+                <span *ngIf="resultDetails$.finished" class="textwrapper m-1">Finished</span>
+                <span *ngIf="!resultDetails$.finished"  class=" textwrapper  m-1">Ongoing</span>
+              </div>
+              </div>
+              <div class="card-body p-4">
+                <h6>Information</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1 ">
+                  <div class="col-6 mb-3">
+                    <h6>Price</h6>
+                    <p class="response ">{{resultDetails$.price}}</p>
+                  </div>
+                  <div class="col-6 mb-3">
+                    <h6>Nombre d'achat</h6>
+                    <p class="response">{{resultDetails$.numberRef}}</p>
+                  </div>
+                </div>
+                <h6>Description</h6>
+                <hr class="mt-0 mb-4">
+                <div class="row pt-1">
+                  <div class="col-6 mb-3">
+                    <p class="response ">{{resultDetails$.sypnopsis}}</p>
+                  </div>
+                  </div>
+<!--                   <div class="row pt-1">
+                    <h5>Location</h5>
+                    <div class="col-6 mb-3">
+                      <p class="text-muted">{{(resultDetails$|async)?.location}}</p>
+                    </div>
+                    </div> -->
+                
+                <div class="d-flex align-items-center justify-content-between mt-3">
+<!--                   <div class=" d-flex">
+                      <div *ngIf="false" class="col-auto m-2"><a href="#!"><i class="fa fa-facebook text-facebook"></i></a></div>
+                      <div class="col-auto m-2"><a href="#!"><i class="fa fa-twitter text-twitter"></i></a></div>
+                      <div class="col-auto m-2"><a href="#!"><i class="fa fa-instagram text-instagram"></i></a></div>
+                    </div> -->
+                    <a (click)="openDialog()" title="View" class="px-2"><fa-icon class="btn btn-primary " [icon]="faCloud"></fa-icon></a> 
+                    <a routerLink="../../Histoire-modification/{{ParamRoute$}}" title="View" class="px-2"><fa-icon class="btn btn-primary " [icon]="faEdit"></fa-icon></a> 
+                      <div class="container">
+                        <div class="d-flex justify-content-end">
+                      <a class="ml-auto p-2" routerLink="../../Chapitres/{{resultDetails$.idStoryTelling}}">
+                          <div class="btn btn-primary m-2">
+                              Chapitres
+                        </div>
+                      </a>
+                      <a (click)="ChangeState()" class="ml-auto p-2">
+                        <div class="btn btn-primary m-2">
+                          <span *ngIf="!resultDetails$.finished" class=" m-1">Finish</span>
+                          <span *ngIf="resultDetails$.finished"  class="  m-1">Open</span>
+                      </div>
+                    </a>
+                      </div>
+                      </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+<section class="border border-info rounded ">
+  <div class="container formcontainer mt-5 commentSection">
+    <div class="d-flex justify-content-center row">
+        <div class="col-md-8">
+            <div class="d-flex flex-column comment-section" *ngFor="let item of commentaires;let i=index">
+                <div class="bg-white p-2">
+                    <div class="d-flex flex-row user-info">
+                        <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{(ResultUsers$[i]|async)?.username}}</span><span class="date text-black-50">Shared publicly - {{item.dateCreation}}</span></div>
+                    </div>
+                    <div class="mt-2">
+                        <p class="comment-text">{{item.commentaire}}</p>
+                    </div>
+                </div>
+                <div class="bg-white">
+                    <div class="d-flex flex-row fs-12">
+                        <div (click)="likeButton(item.idCommentaire)" class="btn like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1"> Like</span><span> {{item.like}}</span></div>
+                        <div (click)="signalButton(item.idCommentaire)" class="btn like p-2 cursor"><i class="fa fa-thumbs-o-down"></i><span class="ml-1"> Signal</span></div> 
+                        <div *ngIf="adapteUser(item.user_id)" (click)="deleteCommentary(item.idCommentaire)" class="btn like p-2 cursor"><fa-icon class="" [icon]="faTrash"></fa-icon><span class="ml-1"> </span></div> 
+                        <!-- <div class="btn like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div> -->
+                        <!-- <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div> -->
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="CommentaryForm" >
+            <div class="bg-light p-2">
+              <div class="d-flex flex-row align-items-start w-100"><textarea placeholder="Write Comment here..." type="text" id="commentaire" name="commentaire" formControlName="commentaire" class=" w-100 p-3 shadow-none textarea"></textarea></div>
+          </div>
+        </form>
+        <div class="mt-2 text-right"><button [disabled]="CommentaryForm.invalid" (click)="onSubmit(currentPage,resultDetails$.idZone)" class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button><button (click)="resetPage()" class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button></div>
+        </div>
+    </div>
+</div>
+<mat-paginator #paginator [length]="(resultCommentary$|async)?.totalCount"
+[pageSize]="10"
+aria-label="Select page"
+(page)="handlePageEvent($event)">
+</mat-paginator>
+</section>

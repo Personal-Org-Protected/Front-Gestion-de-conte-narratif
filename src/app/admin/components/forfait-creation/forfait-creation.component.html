@@ -1,0 +1,106 @@
+<!-- 
+<div class=" background py-5 h-100  d-flex justify-content-center">
+  <div class=" card w-50 d-flex justify-content-between">
+    <div class="d-flex align-item-center">
+      <form [formGroup]="ForfaitForm" (ngSubmit)="onSubmit()">
+       
+        <div>
+          <label for="Forfait_libelle">Libelle</label>
+          <input type="text" id="Forfait_libelle" name="Forfait_libelle" formControlName="Forfait_libelle">
+        </div>
+       
+        <div>
+          <label for="Forfait_value">Value</label>
+          <input type="text" id="Forfait_value" name="Forfait_value" formControlName="Forfait_value">
+        </div>
+       
+        <div>
+          <label for="Forfait_reduction">Reduction ratio </label>
+          <input type="text" id="Forfait_reduction" name="Forfait_reduction" formControlName="Forfait_reduction">
+        </div>
+       
+       
+        <div>
+          <label for="Forfait_isForAuthor">is it for Author </label>
+          <input type="checkbox" id="Forfait_isForAuthor" name="Forfait_isForAuthor" formControlName="Forfait_isForAuthor">
+        </div>
+       
+       
+        <div>
+          <label for="Forfait_role">Role </label>
+          <select id="Forfait_role" name="Forfait_role" formControlName="Forfait_role">
+            <option value="1">User-lambda</option>
+            <option value="2">Author</option>
+          </select>
+      </div>
+           
+      </form>
+    </div>
+      <div class=" d-flex flex-row-reverse m-1">
+        <button class="m-2 btn" >Reset</button>
+        <button class="m-2 btn" >{{ActionBtn}}</button>
+      </div>
+   </div>
+    
+  </div>
+ -->
+
+ <div class="container-fluid px-1 py-5 mx-auto background">
+  <div class="row d-flex justify-content-center">
+      <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+          <div class="card">
+            <h2 class="mb-5">The data Form to create a forfeit</h2>
+              <form [formGroup]="ForfaitForm" >
+                  <div class="row d-flex justify-content-center text-left">
+                      <div class="col-sm-6 flex-column d-flex">
+                          <label for="forfaitLibelle">Libelle</label>
+                          <div class="validationText" *ngIf="Libelle?.invalid && Libelle?.touched">
+                            <span>
+                              Entry not valid
+                            </span>
+                            <div *ngIf="Libelle?.errors?.['maxlength']">
+                              Entry should not go over 20 character
+                            </div>
+                          </div>
+                              <input type="text" id="forfaitLibelle" name="forfaitLibelle" formControlName="forfaitLibelle" required>
+                      </div>
+                        <div class=" col-sm-6 flex-column d-flex">
+                            <label for="forfaitValue">Value</label>
+                        <div class="validationText" *ngIf="Value?.invalid && Value?.touched ">
+                          <span>
+                            Entry not valid
+                          </span>
+                        </div>
+                            <input type="text" id="forfaitValue" name="forfaitValue" formControlName="forfaitValue">
+                        </div>
+                        <div class=" col-sm-6 flex-column d-flex">
+                            <label for="reduction">Reduction ratio </label>
+                        <div class="validationText" *ngIf="Reduction?.invalid && Reduction?.touched ">
+                          <span>
+                            Entry not valid
+                          </span>
+                        </div>
+                            <input type="text" id="reduction" name="reduction" formControlName="reduction">
+                        </div>
+                  </div>
+
+                    <div class="d-flex justify-content-center text-left">
+                      <label for="isForAuthor">Is it for Author </label>
+                      <input type="checkbox" id="isForAuthor" name="isForAuthor" formControlName="isForAuthor" >
+                    </div>
+                    <div class="d-flex justify-content-center text-left">
+                        <label for="idRole">Role </label>
+                        <select id="idRole" name="idRole" formControlName="idRole">
+                          <option value="2">User-lambda</option>
+                          <option value="3">Author</option>
+                        </select>
+                    </div>
+              </form>
+              <div class=" d-flex flex-row-reverse m-1" >
+                <button (click)="resetPage()" class="m-2 btn" >Reset</button>
+                <button [disabled]="ForfaitForm.invalid" (click)="onSubmit()" class="m-2 btn" >{{ActionBtn}}</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

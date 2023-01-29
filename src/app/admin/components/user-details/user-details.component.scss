@@ -1,0 +1,49 @@
+
+section{
+
+    background: rgb(215,124,102);
+    background: linear-gradient(205deg, rgba(215,124,102,0.9584034297312675) 30%, rgba(119,10,152,0.9696079115239846) 70%);
+}
+
+.right-border-custom{
+
+    background: linear-gradient(to right bottom, rgb(250, 226, 147), rgb(252, 183, 164))
+}
+.gradient-custom {
+    
+    /* fallback for old browsers */
+    background: #f6d365;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+    }
+
+    p{
+        font-style: normal;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 400;
+    }
+
+    h1,h2,h3,h4,h5,h6{
+        font-size: medium;
+        font-style:oblique;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 600;
+    }
+
+    .display{
+        display: inline-block;
+    }
+
+    a{
+        color: crimson;
+    }
+    .response{
+        color: rgb(214, 18, 116);
+        font-weight: 300;
+        font-size:medium;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }

@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<section class="background vh-100">
+    <div class="container py-4">
+    <div class="" *ngIf="result$!=null">
+        <a routerLink="../Tag-creation"><button class="btn third"> Create</button></a>
+      </div>
+      <div class=" d-flex justify-content-center py-4">
+        <div class="col-md-12 mt-4 ">
+            <div class="row" >
+                <div class="col-xl-3 col-lg-6" *ngFor="let item of (result$ | async)?.items">
+                    <div class="card l-bg-cherry">
+                        <div class="card-statistic-3 p-4">
+                            <div class="card-icon card-icon-large"></div>
+                            <div class="mb-4">
+                                <h2 class="card-title mb-0">{{item.nameTag}}</h2>
+                            </div>
+                            <div class="row align-items-center mb-2 d-flex">
+                                <div class="col-8">
+                                    <h5 class="d-flex align-items-center mb-0">
+                                        {{item.numberRef}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="progress mt-1 " data-height="8" style="height: 8px;">
+                                <div class="progress-bar l-bg-cyan" role="progressbar" data-width="25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width.': item.numberRef}" ></div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-3 mx-2">
+                               <a routerLink="../Tag-modification/{{item.idTag}}"> <button class="btn-primary update mx-2"> Update</button></a>
+                                <!-- <button class=" btn-primary delete mx-2" (click)="DeleteTag(item.idTag)"> Delete</button> -->
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+        
+      </div>
+    </div>
+</section>
+<mat-paginator #paginator [length]="(result$|async)?.totalCount"
+[pageSize]="10"
+aria-label="Select page"
+(page)="handlePageEvent($event)">
+</mat-paginator>

@@ -1,0 +1,41 @@
+
+.background{
+    overflow: hidden;
+    background: rgb(255,64,0);
+    background: linear-gradient(205deg, rgba(255,64,0,0.9079832616640406) 15%, rgba(125,43,223,0.8883754185267857) 42%, rgba(255,52,110,0.9696079115239846) 86%);
+}
+
+.validationText{
+    font-weight: 600;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+    color:rgba(255,64,0,0.9079832616640406);
+}
+h2{
+    font-weight: 400;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color:#dd2476;
+}
+.card{
+    font-weight: 300;
+    font-size: larger;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background: #222;
+    border: 1px solid #dd2476;
+    margin-bottom: 2rem;
+    color:#dd2476
+}
+
+.btn {
+    border: 5px solid;
+    color: #68d8e0;
+    border-image-slice: 1;
+    background: rgb(83, 34, 18);
+    background: linear-gradient(205deg, rgba(255,64,0,0.9079832616640406) 9%, rgba(67, 44, 160, 0.888) 57%, rgba(248, 20, 195, 0.97) 86%); 
+    border-image-source:  var(--gradient) !important; 
+    text-decoration: none;
+    transition: all .4s ease;
+  }
+
+  body{color: #000;overflow-x: hidden;height: 100%;background-image: url("https://i.imgur.com/GMmCQHC.png");background-repeat: no-repeat;background-size: 100% 100%}.card{padding: 30px 40px;margin-top: 60px;margin-bottom: 60px;border: none !important;box-shadow: 0 6px 12px 0 rgba(0,0,0,0.2)}.blue-text{color: #00BCD4}.form-control-label{margin-bottom: 0}input, textarea, button{padding: 8px 15px;border-radius: 5px !important;margin: 5px 0px;box-sizing: border-box;border: 1px solid #ccc;font-size: 18px !important;font-weight: 300}input:focus, textarea:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;border: 1px solid #00BCD4;outline-width: 0;font-weight: 400}.btn-block{text-transform: uppercase;font-size: 15px !important;font-weight: 400;height: 43px;cursor: pointer}.btn-block:hover{color: #fff !important}button:focus{-moz-box-shadow: none !important;-webkit-box-shadow: none !important;box-shadow: none !important;outline-width: 0}

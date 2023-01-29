@@ -1,0 +1,177 @@
+
+
+
+
+
+
+
+<!-- 
+<main class="vh-100 background ">
+  <div class="py-4">
+    <div class='card'>
+      <div class='info'>
+        <h1 class='title'>Title</h1>
+        <p class='description'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius esse corporis, velit porro impedit laudantium accusamus! Id velit, illum magni rem mollitia blanditiis iste maiores optio ipsa, est dolorem fugit. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius esse corporis, velit porro impedit laudantium accusamus! Id velit, illum magni rem mollitia blanditiis iste maiores optio ipsa, est dolorem fugit.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+ -->
+
+
+
+
+
+
+
+    <section class="background vh-100 ">
+      <div class="courses-container">
+        <div class="d-flex course">
+          <div  *ngIf="StoryBoxe.facade.url!=null" class="course-preview" [ngStyle]="{'background-image': 'url('+StoryBoxe.facade.url+')'}">
+
+          </div>
+          <div *ngIf="StoryBoxe.facade.url==null" class="course-preview" [ngStyle]="{'background-image': 'url(src/assetsimages/question-mark-black-monochrome-white.png)'}">
+
+          </div>
+          <div class="course-info">
+
+              <div class="Desciption d-flex flex-column">
+                <h1 class="p-2">
+                    {{StoryBoxe.facade.nameStory}}
+                </h1>
+                  <span class="synopsis p-2">
+                    <p>
+                      {{StoryBoxe.facade.sypnopsis}}
+                    </p>
+                  </span>
+              </div>
+
+              
+                <div class="">
+                  <a routerLink="../../Lecture/{{StoryBoxe.idBox}}">
+                  <fa-icon class="details" [icon]="faBookReader"></fa-icon>
+                </a>
+                </div>
+             
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- chapitres -->
+
+
+     <div class="container l-container py-4">
+        <div  [ngStyle]="lastChapterChecked(item.order)" class="b-game-card mx-4" *ngFor="let item of Chapters.items" >
+          <a  routerLink="../../Chapitre-details/{{item.idChapitre}}">
+          <div class="b-game-card__cover "></div>
+          <div>
+            <h1>
+              {{item.story.nomStory}}
+            </h1>
+            <span>
+            <p>
+              {{item.story.textStory.substring(0,20)}}...
+            </p>
+            </span>
+            <div class="d-flex justify-content-end mx-4">
+            <span class="order">
+              {{item.order}}
+            </span>
+          </div>
+          </div>
+        </a>
+        </div>
+      </div> 
+      
+
+    </section>
+
+
+    <mat-paginator #paginator [length]="Chapters.totalCount"
+    [pageSize]="4"
+    aria-label="Select page"
+    (page)="handlePageEvent($event)">
+    </mat-paginator>
+
+
+
+
+
+
+
+
+
+<!-- commentary section -->
+
+      <section class="background order  rounded">
+        <div class="Title">
+          <h1>  Commentary Section</h1>
+        </div>
+        <div class="container formcontainer mt-5">
+          <div class="d-flex justify-content-center row">
+              <div class="col-md-8">
+                  <div class="d-flex flex-column box" *ngFor="let item of commentaires;let i=index">
+                      <div class=" p-2">
+                          <div class="d-flex flex-row user-info">
+                              <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{(ResultUsers$[i]|async)?.username}}</span><span class="date text-black-50">Shared publicly - {{item.dateCreation}}</span></div>
+                          </div>
+                          <div class="mt-2">
+                              <p class="comment-text">{{item.commentaire}}</p>
+                          </div>
+                      </div>
+                      <div class="">
+                          <div class="d-flex flex-row fs-12">
+                              <div (click)="likeButton(item.idCommentaire)" class="btn like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1"> Like</span><span> {{item.like}}</span></div>
+                              <div (click)="signalButton(item.idCommentaire)" class="btn like p-2 cursor"><i class="fa fa-thumbs-o-down"></i><span class="ml-1"> Signal</span></div> 
+                              <div *ngIf="adapteUser(item.user_id)" (click)="deleteCommentary(item.idCommentaire)" class="btn like p-2 cursor"><fa-icon class="" [icon]="faTrash"></fa-icon><span class="ml-1"> </span></div> 
+                          <!-- <div class="btn like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div> -->
+                              <!-- <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div> -->
+                         </div>
+                      </div>
+                  </div>
+                  <form [formGroup]="CommentaryForm" >
+                  <div class="bg-light p-2">
+                    <div class="d-flex flex-row align-items-start w-100"><textarea placeholder="Write Comment here..." type="text" id="commentaire" name="commentaire" formControlName="commentaire" class=" w-100 p-3 shadow-none textarea"></textarea></div>
+                </div>
+              </form>
+              <div class="mt-2 text-right">
+                <button [disabled]="CommentaryForm.invalid" (click)="onSubmit()" class="btn btn-primary btn-sm shadow-none m-2" type="button">Post comment</button>
+                <button (click)="resetPage()" class="btn btn-outline-primary btn-sm ml-1 shadow-none m-2" type="button">Cancel</button></div>
+              </div>
+          </div>
+      </div>
+      <mat-paginator #paginator [length]="(resultCommentary$|async)?.totalCount"
+      [pageSize]="10"
+      aria-label="Select page"
+      (page)="handleCommentaryPageEvent($event)">
+      </mat-paginator>
+      </section> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
