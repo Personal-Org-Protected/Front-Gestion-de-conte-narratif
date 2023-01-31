@@ -1,12 +1,14 @@
 
     <section class="wrapper background vh-100 d-flex">
-
-        <div class=" col-md-2 d-flex justify-content-center scroll">
-            <div class="w-75 d-flex justify-content-center ">
-                <a  *ngFor="let item of resultTag$" class="my-2"><button *ngIf="(item|async) as tag" (click)="getBooks(tag.idTag)" class=" btn third"> {{(item|async)?.nameTag}}</button></a>
-              <!-- <a  *ngFor="let item of Tags" class=""><button (click)="getBooks(item.idTag)" class=" btn third"> {{item.nameTag}}</button></a> -->  
-            </div>
-        </div>
+        <div class=" col-md-2  scroll">
+          <div class="w-75 tags vh-100">
+              <a  *ngFor="let item of resultTag$.tags" class="my-2">
+                <button *ngIf="item as tag" (click)="getBooks(tag.idTag)" class=" btn third"> 
+                {{item.nameTag}}
+              </button>
+            </a>
+          </div>
+      </div>
 
         <div class="container d-flex flex-wrap py-5">
 
@@ -26,7 +28,7 @@
           </div>
           <div class="card__footer">
             <p class="card__date">{{item.dateCreation}}</p>
-            <p class="mx-3">{{(resultTag$[i]|async)?.nameTag}}</p>
+            <p class="mx-3">{{Storytag(item.idTag)}}</p>
           </div>
         </div>
     </div>

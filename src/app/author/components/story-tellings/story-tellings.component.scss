@@ -3,6 +3,11 @@
     background: rgb(255,64,0);
     background: linear-gradient(205deg, rgba(255,64,0,0.9079832616640406) 15%, rgba(125,43,223,0.8883754185267857) 42%, rgba(255,52,110,0.9696079115239846) 86%); 
   }
+
+  .tags{
+    border-right: #036b97 solid ;
+  }
+
 $dark:#131325;
 
 .flex-row {
@@ -243,4 +248,10 @@ transition: all 150ms ease-in-out;
   border-radius: 1.5em;
   box-shadow: 0 0 10px 0 #23bdb8 inset, 0 0 10px 4px #23bdb8;
 }
+}
+
+.scroll{
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
 }

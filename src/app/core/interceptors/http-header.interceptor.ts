@@ -1,11 +1,11 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, Input, OnInit } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
   HttpInterceptor
 } from '@angular/common/http';
-import { firstValueFrom, Observable,lastValueFrom, timeout, take, Subject, tap, switchMap } from 'rxjs';
+import { firstValueFrom, Observable,lastValueFrom, timeout, take, Subject, tap, switchMap, observable, filter, OperatorFunction, catchError, throwError } from 'rxjs';
 import { AuthServicesService } from '../auth/auth-services.service';
 import { IdToken } from '@auth0/auth0-angular';
 import { AppComponent } from 'src/app/app.component';
@@ -21,7 +21,6 @@ export class HttpHeaderInterceptor implements HttpInterceptor{
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
       return this.auth.getToken().pipe(
-         // side effect to set token property on auth service
         switchMap(token => { // use transformation operator that maps to an Observable<T>
           const newRequest = request.clone({
             setHeaders: {
@@ -31,8 +30,8 @@ export class HttpHeaderInterceptor implements HttpInterceptor{
           return next.handle(newRequest);
         })
       ); 
-
   }
+
 
   private getTokenClaims(){
     const response=this.auth.getTokenClaims();

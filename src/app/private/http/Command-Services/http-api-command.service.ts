@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpParams, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from 'src/environments/environment';
@@ -10,8 +10,9 @@ import { Result } from '../../models/Common';
 export class HttpApiCommandService<T> {
 
   private uri:string;
-  constructor(private http:HttpClient) { 
+  constructor(private http:HttpClient,private clientSpec:HttpClient,private byPass:HttpBackend) { 
     this.uri=environment.serverApi.DefaultConfig.uri
+    this.clientSpec=new HttpClient(this.byPass);
   }
 
 
@@ -54,4 +55,8 @@ return this.http.delete<Result>(`${this.uri}${Endpoint}/${id}`,
 );
 }
 
+
+PostNotoken(data:T,Endpoint:string):Observable<Result>{
+  return this.clientSpec.post<Result>(`${this.uri}${Endpoint}`,data);
+}
 }

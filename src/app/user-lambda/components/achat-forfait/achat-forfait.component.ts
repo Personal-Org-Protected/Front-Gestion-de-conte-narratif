@@ -6,7 +6,7 @@ import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
 import { ChangeForfait, UpdateUser } from 'src/app/private/models/Entity';
-import { ForfaitDto, userDisplay, UserForfaitVM } from 'src/app/private/models/EntityDto';
+import { ForfaitDto, RoleDto, userDisplay, UserForfaitVM, UserRolesVM } from 'src/app/private/models/EntityDto';
 import { CommonService } from 'src/app/private/services/common.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class AchatForfaitComponent implements OnInit {
 
   private Endpoint$:string;
   private paramaRoute$:string;
+  private roles:UserRolesVM;
   private pgNumber:number;
   CurrentUser$:string;
   User:userDisplay;
@@ -31,6 +32,7 @@ export class AchatForfaitComponent implements OnInit {
     private forfaitQueryApi:HttpApiQueryService<ForfaitDto>,
     private userForfaitApiCommand:HttpApiCommandService<ChangeForfait>,
     private userRoleApiCommand:HttpApiCommandService<UpdateUser>,
+    private userRoleApiQueries:HttpApiQueryService<UserRolesVM>,
     private route:ActivatedRoute,
     private router:Router,
     private common:CommonService,) { }
@@ -40,6 +42,7 @@ export class AchatForfaitComponent implements OnInit {
     this.getUserid();
     this.getid();
     await this.getForfait();
+    await this.getUserRoles();
     await this.getCurrentUserInfo();
   }
 
@@ -62,6 +65,11 @@ export class AchatForfaitComponent implements OnInit {
 
 
 
+  async getUserRoles(){
+    const endpoint="UserRoles"
+    const response=this.userRoleApiQueries.getWithDetails(endpoint,this.CurrentUser$);
+    this.roles=await lastValueFrom(response);
+  }
   getid(){
       this.paramaRoute$=this.route.snapshot.paramMap.get('id')?? "No value";
   }
@@ -86,16 +94,23 @@ this.User=await lastValueFrom(response);
       const result=await lastValueFrom(response);
       console.log(result);
      if(this.Forfait.roleId==3){
-      await this.giveRoleUser();
-      await this.giveRoleAuth();
-      await this.deleteRoleUser(4);
-     await this.deleteRoleAuth(4);
+    await this.addressAuthorConfig();
     } 
     setTimeout(() => {
       this.router.navigate(['/Private/'+this.CurrentUser$+'/User-lambda/Forfait-acheté']);
-    }, 400); 
+    }, 600); 
       }
 
+      
+
+     async addressAuthorConfig(){
+        await this.giveRoleUser();
+        await this.giveRoleAuth();
+        if(this.roles.userRoles.find(t=>t.idRole==4)!=null)
+        {
+        await this.deleteRoleUser(4);
+       await this.deleteRoleAuth(4);}
+      }
   async giveRoleUser(){
     this.innitRoleForm();
     const endpoint="UserRoles/Author";

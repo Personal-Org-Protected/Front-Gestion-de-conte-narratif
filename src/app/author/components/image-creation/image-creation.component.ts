@@ -68,7 +68,9 @@ export class ImageCreationComponent implements OnInit {
      let response=lastValueFrom(this.result$);
      response.then((res)=>{
      console.log(res);
-     this.router.navigate(['../Images-librairie']);
+     setTimeout(() => {
+      this.router.navigate(['/Private/'+this.CurrentUser$+'/Author/Images-librairie']);
+    }, 400); 
      })
     } 
 

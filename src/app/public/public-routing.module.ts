@@ -20,7 +20,8 @@ children:[
   {path:'contact',component:ContactComponent},
   {path:'forfait/:user_id',component:ForfaitComponent,canActivate:[AuthGuard]},
   {path:'Signup',component:UserCreationComponent}
-]}
+]
+}
 ];
 
 @NgModule({

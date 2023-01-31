@@ -8,6 +8,7 @@ import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-
 import { PaginatedItems, Result } from 'src/app/private/models/Common';
 import { StoryTelling, StoryTellingEdit } from 'src/app/private/models/Entity';
 import { StoryTellingDto, TagDto } from 'src/app/private/models/EntityDto';
+import { CommonService } from 'src/app/private/services/common.service';
 
 @Component({
   selector: 'app-story-tell-modification',
@@ -23,13 +24,14 @@ export class StoryTellModificationComponent implements OnInit {
   resultTags$:Observable<PaginatedItems<TagDto>>;
   private ParamRoute$:string;
   private Endpoint:string;
-
+  CurrentUser$:string;
    constructor(private formBuilder:FormBuilder,
     private storyTellQueryApi:HttpApiQueryService<StoryTellingDto>,
      private storyTellCommandApi: HttpApiCommandService<StoryTellingEdit>,
      private tagApiQuery: HttpApiQueryService<TagDto>,
      private router:Router,
-     private route:ActivatedRoute
+     private route:ActivatedRoute,
+     private common:CommonService
      ) { }
  
      ngOnInit(): void {//changer le nom des proprietes
@@ -40,13 +42,18 @@ export class StoryTellModificationComponent implements OnInit {
       this.innitForm();
     }
 
+    getUserid(){
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+      this.CurrentUser$=this.common.formatUserId(id); 
+    }
+
     innitForm(){
       this.StoryTellForm=this.formBuilder.group({
         id: ['',[Validators.required,Validators.min(1)]],
         nameStory: ['',[Validators.required,Validators.maxLength(40)]],
         url: ['',[Validators.maxLength(200)]],
         price: ['',[Validators.required]],
-        synopsis: ['',[Validators.required,Validators.maxLength(200)]],
+        synopsis: ['',[Validators.required,Validators.minLength(20),Validators.maxLength(300)]],
         idTag: ['',[Validators.min(1)]]
        });
     }
@@ -56,7 +63,9 @@ export class StoryTellModificationComponent implements OnInit {
        this.result$=this.storyTellCommandApi.put(this.StoryTellForm.value,this.Endpoint,this.ParamRoute$);
        lastValueFrom(this.result$).then((response)=>{
         console.log(response);
-        this.router.navigate(['../../Histoire-details/'+this.ParamRoute$]);
+        setTimeout(() => {
+          this.router.navigate(['/Private/'+this.CurrentUser$+'/Author/Histoire-details/'+this.ParamRoute$]);
+        }, 400); 
        }); 
        console.log(this.StoryTellForm.value);
 

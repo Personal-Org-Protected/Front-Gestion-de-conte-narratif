@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Library } from '@fortawesome/fontawesome-svg-core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { AuthServicesService } from 'src/app/core/auth/auth-services.service';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
@@ -20,6 +21,7 @@ export class UserCreationComponent implements OnInit {
   ActionBtn:string="Save";
   UserForm : FormGroup;
   UserRoleForm:FormGroup;
+  LibraryForm:FormGroup;
   result$:Observable<Result>;
   private Endpoint: string;
   private user_id:string;
@@ -30,6 +32,7 @@ export class UserCreationComponent implements OnInit {
     private userAuthApiCommand:HttpApiCommandService<User>,
     private userForfaitCommand:HttpApiCommandService<UpdateUser>,
     private userRoleCommand:HttpApiCommandService<UpdateUser>,
+    private libraryCommandApi:HttpApiCommandService<Library>,
     private auth:AuthServicesService) { }
 
   ngOnInit(): void {
@@ -57,22 +60,33 @@ export class UserCreationComponent implements OnInit {
     });
   }
 
+  innitLibraryForm(){
+    this.LibraryForm=this.formBuilder.group({
+      nameLibrary:['Library of '+this.user_id,[Validators.required,Validators.minLength(1)]],
+      user_id:[this.user_id,[Validators.required,Validators.minLength(1)]]
+    });
+
+
+  }
+
 
 
   
  async onSubmit(){ //Le soleil se levait, l'horizon s’éclaircissait.
 
-
     if(this.UserForm.valid){
       await this.fillForm();
      await this.createUser();
-     await this.createUserAuth();
+    await this.createUserAuth();
      await this.addressDefaultForfait();
      await this.addressDefaultRole();
-     await this.addressDefaultAuthRole();
-     this.auth.login();
+     await this.addressDefaultAuthRole(); 
+     await this.createLibrary();  
+      setTimeout(() => {
+      this.auth.login();
+     }, 800); 
     } 
-
+  
    }
 
 
@@ -81,48 +95,54 @@ export class UserCreationComponent implements OnInit {
     this.UserForm.patchValue({
       user_id:this.user_id
     });
-
     this.innitUserRoleForm();
+    this.innitLibraryForm();
    }
 
 
    async getUserId(username:string){
     const endpoint=this.Endpoint+"/GenerateId";
-   const response= this.userApiQuery.getWithDetails(endpoint,username);
+   const response= this.userApiQuery.getNoToken(endpoint,username);
    const result=await lastValueFrom(response);
    this.user_id=result.user_id; 
    }
 
+   async createLibrary(){
+    const endpoint="Library";
+    const response= this.libraryCommandApi.PostNotoken(this.LibraryForm.value,endpoint);
+   const result=await lastValueFrom(response); 
+   console.log(result);
+   }
   async createUser(){
-    const response=this.userApiCommand.post(this.UserForm.value,this.Endpoint);
+    const response=this.userApiCommand.PostNotoken(this.UserForm.value,this.Endpoint);
     const result=await lastValueFrom(response);
     console.log(result);
    }
 
    async createUserAuth(){
     const endpoint="UserAuth"
-    const response=this.userAuthApiCommand.post(this.UserForm.value,endpoint);
+    const response=this.userAuthApiCommand.PostNotoken(this.UserForm.value,endpoint);
     const result=await lastValueFrom(response);
     console.log(result);
    }
 
    async addressDefaultRole(){
     const endpoint="UserRoles/Default"
-    const response=this.userAuthApiCommand.post(this.UserRoleForm.value,endpoint);
+    const response=this.userAuthApiCommand.PostNotoken(this.UserRoleForm.value,endpoint);
     const result=await lastValueFrom(response);
     console.log(result);
    }
 
    async addressDefaultAuthRole(){
     const endpoint="UserAuth/Default"
-    const response=this.userAuthApiCommand.post(this.UserRoleForm.value,endpoint);
+    const response=this.userAuthApiCommand.PostNotoken(this.UserRoleForm.value,endpoint);
     const result=await lastValueFrom(response);
     console.log(result);
    }
 
    async addressDefaultForfait(){
     const endpoint="UserForfaits/Default"
-    const response=this.userAuthApiCommand.post(this.UserRoleForm.value,endpoint);
+    const response=this.userAuthApiCommand.PostNotoken(this.UserRoleForm.value,endpoint);
     const result=await lastValueFrom(response);
     console.log(result);
    }

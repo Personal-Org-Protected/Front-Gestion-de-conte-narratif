@@ -49,8 +49,10 @@
          
                       <div class="d-flex justify-content-center text-left">
                             <label for="idTag">Tag </label>
-                            <select id="idTag" name="idTag" formControlName="idTag" *ngFor="let tag of (resultTags$|async)?.items">
-                              <option [value]="tag.idTag">{{tag.nameTag}}</option>
+                            <select id="idTag" name="idTag" formControlName="idTag" >
+                          
+                              <option *ngFor="let tag of (resultTags$|async)?.items" [value]="tag.idTag">{{tag.nameTag}}</option>
+                        
                             </select>
                         </div>
                 </form>

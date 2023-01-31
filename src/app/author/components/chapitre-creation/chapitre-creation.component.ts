@@ -91,7 +91,9 @@ export class ChapitreCreationComponent implements OnInit {
      await this.CreateStory();
    this. innitChapitreForm();
    await this.createChapter();
-   this.router.navigate(['../Chapitres/'+this.StoryTell]);  
+   setTimeout(() => {
+    this.router.navigate(['/Private/'+this.CurrentUser$+'/Author/Chapitres/'+this.StoryTell]);
+  }, 400); 
    }
 
    async CreateStory(){

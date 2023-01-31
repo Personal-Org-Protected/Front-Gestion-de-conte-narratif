@@ -137,6 +137,11 @@ export interface TagDto{
       numberRef:number
 }
 
+
+export interface tagVM{
+      tags:Array<TagDto>
+}
+
 export interface TransactionDto{
       nameBook :string
       price :number

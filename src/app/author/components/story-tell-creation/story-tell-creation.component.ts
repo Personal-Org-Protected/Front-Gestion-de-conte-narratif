@@ -34,7 +34,6 @@ export class StoryTellCreationComponent implements OnInit {
     ngOnInit(): void {//changer le nom des proprietes
       this.Endpoint="StoryTelling";
       this.getUserid();
-      //this.CurrentUser$="Author_6af174d4-5c02-49c8-b8f1-4c76d855d4be";
       this.getTags(1);
    this.innitForm();
     }
@@ -68,7 +67,9 @@ innitForm(){
      let response=lastValueFrom(this.result$);
      response.then((res)=>{
      console.log(res);
-     this.router.navigate(['../Histoires']);
+     setTimeout(() => {
+      this.router.navigate(['/Private/'+this.CurrentUser$+'/Author/Histoires']);
+    }, 400); 
      })
     } 
 

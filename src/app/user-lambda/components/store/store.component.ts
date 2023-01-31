@@ -5,7 +5,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
 import { PaginatedItems } from 'src/app/private/models/Common';
-import { FacadeDto, StoryTellingDto, TagDto, userDisplay } from 'src/app/private/models/EntityDto';
+import { FacadeDto, StoryTellingDto, TagDto, tagVM, userDisplay } from 'src/app/private/models/EntityDto';
 import {faMoneyBill} from '@fortawesome/free-solid-svg-icons'
 import { CommonService } from 'src/app/private/services/common.service';
 import { ActivatedRoute } from '@angular/router';
@@ -23,23 +23,20 @@ CurrentTag$:number;
 CurrentUser$:string;
 LastPageChecked$:number;
 Result$:Observable<PaginatedItems<FacadeDto>>;
-resultTag$:Array<Observable<TagDto>>;
-Tags:Array<TagDto>;
+resultTag$:tagVM;
   constructor(private storytellApiQuery:HttpApiQueryService<FacadeDto>,
-    private tagApiQuery:HttpApiQueryService<TagDto>,
+    private tagApiQuery:HttpApiQueryService<tagVM>,
     private common:CommonService,
     private route:ActivatedRoute) { }
 
   async ngOnInit(): Promise<void> {
     this.Endpoint="StoryTelling/Store";
-    this.Tags=new Array<TagDto>;
-    this.CurrentTag$=1
+    this.CurrentTag$=1;
     this.getUserid();
-   // this.CurrentUser$="UserLambda_270b7c19-1968-4920-970a-e3deed612cb3";
     this.LastPageChecked$=1;
     this.StoryTells=new Array<FacadeDto>;
     await this.getBooks();
-   // await this.getAllTags()
+    await this.getAllTags()
   }
 
   getUserid(){
@@ -57,21 +54,10 @@ Tags:Array<TagDto>;
     const response=this.storytellApiQuery.getWithPaginationParams(this.Endpoint,params);
     const result=await lastValueFrom(response);
     this.StoryTells=result.items;
-    this.getIdTag();
   }
-
-  getIdTag(){
-    this.resultTag$=new Array<Observable<TagDto>>;
-    this.StoryTells.forEach(m=>{
-      this.getTag(m.idTag);
-    })
+  Storytag(idTag:number){
+    return this.resultTag$.tags.find(t=>t.idTag==idTag)?.nameTag;
   }
-
- getTag(idTag:number){
-  const endpoint="Tag"
-  const response=this.tagApiQuery.getWithDetails(endpoint,idTag.toString());
-  this.resultTag$.push(response);
- }
 
 
   enoughBook(){
@@ -82,13 +68,11 @@ Tags:Array<TagDto>;
 
 
   async getAllTags(){
-    const endpoint="Tag"
-    let params=new HttpParams();
-    params=params.append("pgNumber",this.LastPageChecked$);
-    const response=this.tagApiQuery.getWithPaginationParams(endpoint,params);
-   const result=await lastValueFrom(response);
-   this.Tags=result.items;
+    const endpoint="Tag/All"
+  const response=this.tagApiQuery.get(endpoint);
+   this.resultTag$=await lastValueFrom(response);
   }
+
 
 
 

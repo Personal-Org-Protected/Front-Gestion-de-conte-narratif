@@ -1,6 +1,14 @@
 
-<section class="background vh-100">
-
+<section class=" background vh-100 d-flex">
+  <div class=" col-md-2  scroll">
+    <div class="w-75 tags vh-100">
+        <a  *ngFor="let item of resultTag$.tags" class="my-2">
+          <button *ngIf="item as tag" (click)="getStoryTell(tag.idTag)" class=" btn third"> 
+          {{item.nameTag}}
+        </button>
+      </a>
+    </div>
+</div>
   <div class='container py-4'>
     <div class="" *ngIf="result$!=null">
       <a routerLink="../Histoire-creation"><button class="btn third"> Create</button></a>

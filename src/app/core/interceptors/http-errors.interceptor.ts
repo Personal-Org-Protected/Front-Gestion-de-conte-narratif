@@ -30,7 +30,6 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
           console.log('this is server side error');
           errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
         }
-        console.log("the message : "+errorMsg);
       
         this.redirectPage(error);
         return throwError(errorMsg);

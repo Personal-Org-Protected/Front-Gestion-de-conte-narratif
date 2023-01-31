@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { endWith, first, lastValueFrom, Observable } from 'rxjs';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
 import { PaginatedItems } from 'src/app/private/models/Common';
-import { StoryTellingDto, userDisplay } from 'src/app/private/models/EntityDto';
+import { StoryTellingDto, TagDto, tagVM, userDisplay } from 'src/app/private/models/EntityDto';
 import { CommonService } from 'src/app/private/services/common.service';
 
 @Component({
@@ -18,41 +18,58 @@ export class StoryTellingsComponent implements OnInit {
   private Endpoint:string;
   private open:number;
   private LastPageChecked:number;
+  resultTag$:tagVM;
+  tagRef:Array<number>;
   result$:Observable<PaginatedItems<StoryTellingDto>>;
   resultAuthor$:Observable<userDisplay>;
   CurrentUser$:string;
-  constructor(private storyTellApiQuery: HttpApiQueryService<StoryTellingDto>
-    ,private userApiQuery: HttpApiQueryService<userDisplay>
-    ,private router:Router,
+  private CurrentTag$:number;
+  constructor(private storyTellApiQuery: HttpApiQueryService<StoryTellingDto>,
+    private userApiQuery: HttpApiQueryService<userDisplay>,
+    private tagApiQuery:HttpApiQueryService<tagVM>,
+    private router:Router,
     private common:CommonService,
     private route:ActivatedRoute) {this.Endpoint="StoryTelling";this.LastPageChecked= 1;this.open=0;}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.LastPageChecked=1;
+    this.CurrentTag$=1;
     this.getUserid();
-    //this.CurrentUser$="Author_6af174d4-5c02-49c8-b8f1-4c76d855d4be";
-    this.getStoryTell(1,this.CurrentUser$);
-    this.getAuthor(this.CurrentUser$);
+    this.getStoryTell();
+   await this.getAllTags();
+    this.getAuthor();
   }
+
+
+  
+  async getAllTags(){
+    const endpoint="Tag/All"
+  const response=this.tagApiQuery.get(endpoint);
+   this.resultTag$=await lastValueFrom(response);
+  }
+
 
   getUserid(){
     const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
     this.CurrentUser$=this.common.formatUserId(id); 
   }
 
-  getStoryTell(pgNumber:number,user_id:string){
+  getStoryTell(idTag?:number){
+    if(idTag!=null){this.CurrentTag$=idTag;this.LastPageChecked=1;}
     const endpoint=this.Endpoint+"/user"
     let params=new HttpParams();
-    params=params.append("pgNumber",pgNumber);
-this.result$=this.storyTellApiQuery.getSpecWithPaginationParams(endpoint,user_id,params);
+    params=params.append("pgNumber",this.LastPageChecked);
+    params=params.append("idTag",this.CurrentTag$);
+    this.result$=this.storyTellApiQuery.getSpecWithPaginationParams(endpoint,this.CurrentUser$,params);
 }
-getAuthor(user_id:string){
+getAuthor(){
   const endpoint="User"
- this.resultAuthor$=this.userApiQuery.getWithDetails(endpoint,user_id);
+ this.resultAuthor$=this.userApiQuery.getWithDetails(endpoint,this.CurrentUser$);
 }
 
 
 imagePresent(url:string){
-  if(url!="") {console.log("l'url existe : "+url);return true;}
+  if(url!="") {return true;}
 
   return false;
 }
@@ -60,7 +77,7 @@ imagePresent(url:string){
 
 handlePageEvent(event:PageEvent){
   this.LastPageChecked= event.pageIndex+1
-  this.getStoryTell(this.LastPageChecked,this.CurrentUser$);
+  this.getStoryTell();
 }
 
 
