@@ -18,20 +18,27 @@ export class HttpApiCommandService<T> {
 
 
 post(data:T,Endpoint:string):Observable<Result>{
-  console.log(`${this.uri}${Endpoint}`+ data);
 return this.http.post<Result>(`${this.uri}${Endpoint}`,data);
+}
+postFormLess(Endpoint:string):Observable<Result>{
+  return this.http.post<Result>(`${this.uri}${Endpoint}`,{
+    
+  });
 }
 
 put(data:T,Endpoint:string,id:string):Observable<Result>{
 return this.http.put<Result>(`${this.uri}${Endpoint}/${id}`,data);
 }
+
 putWithParams(Endpoint:string,id:string,body:any,params:HttpParams):Observable<Result>{
-  console.log(`${this.uri}${Endpoint}/${id}`+ params);
   return this.http.put<Result>(`${this.uri}${Endpoint}/${id}`,body,{
     params:params
   });
   }
 
+  putStand(data:T,Endpoint:string):Observable<Result>{
+    return this.http.put<Result>(`${this.uri}${Endpoint}`,data);
+    }
 
 
   putSpec(Endpoint:string,id:string,params?:HttpParams):Observable<Result>{
@@ -42,18 +49,18 @@ putWithParams(Endpoint:string,id:string,body:any,params:HttpParams):Observable<R
 
 
 delete(Endpoint:string,id:string):Observable<Result>{
-  console.log(`${this.uri}${Endpoint}/${id}`);
 return this.http.delete<Result>(`${this.uri}${Endpoint}/${id}`);
 }
 
 deleteWithParams(Endpoint:string,id:string,parameter:HttpParams):Observable<Result>{
-  console.log("Endpoint: "+`${this.uri}${Endpoint}/${id}`);
 return this.http.delete<Result>(`${this.uri}${Endpoint}/${id}`,
 {
   params:parameter
 }
 );
 }
+
+
 
 
 PostNotoken(data:T,Endpoint:string):Observable<Result>{

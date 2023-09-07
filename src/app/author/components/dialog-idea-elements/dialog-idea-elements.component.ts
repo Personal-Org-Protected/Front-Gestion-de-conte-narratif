@@ -65,14 +65,12 @@ async edit(id:number,val:string){
   if(this.IdeaEditformgroup.valid){
     const response=this.ideaApiCommand.put(this.IdeaEditformgroup.value,this.Endpoint,id.toString());
     const result=await lastValueFrom(response);
-    console.log(result);
     this.getIdeaContent(this.data);
 }
  }
  async delete(id:number){
 const response=this.ideaApiCommand.delete(this.Endpoint,id.toString());
 const result=await lastValueFrom(response);
-console.log(result);
 await this.getIdeaContent(this.data);
  }
 
@@ -80,7 +78,6 @@ await this.getIdeaContent(this.data);
   if(this.IdeaPostformgroup.valid){
 const response=this.ideaApiCommand.post(this.IdeaPostformgroup.value,this.Endpoint);
 const result=await lastValueFrom(response);
-console.log(result)
 this.getIdeaContent(this.data);
  }
 }

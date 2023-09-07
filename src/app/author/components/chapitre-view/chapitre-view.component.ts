@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -129,7 +130,6 @@ document.querySelector(".book")?.addEventListener("click", (ev) => {
   }
 
 
-
   implmentImage(book:HTMLElement){
     if(this.Image.uri!= null)
     book.style.setProperty('--url', 'url('+this.Image.uri+')');
@@ -138,12 +138,12 @@ document.querySelector(".book")?.addEventListener("click", (ev) => {
 
   TextAreaMode(){
     console.log("textArea mode");
-    var e = document.getElementsByTagName('p')[0];
+    var e = document.querySelector("#content") as HTMLParagraphElement;
     var d = document.createElement('textarea');
     this.content=e;
     d.cols=38;
     d.rows=15;
-    d.textContent=e.textContent ;
+    d.textContent=e?.textContent ;
     e.parentNode?.replaceChild(d, e);
     this.isTexteArea=true;
   }
@@ -159,7 +159,7 @@ document.querySelector(".book")?.addEventListener("click", (ev) => {
 
   inputMode(){
     console.log("input mode");
-    var e = document.getElementsByTagName('h3')[0];
+    var e = document.querySelector("#title") as HTMLParagraphElement;
     var d = document.createElement('input');
     this.title=e;
     d.value=e.textContent!;
@@ -172,6 +172,7 @@ document.querySelector(".book")?.addEventListener("click", (ev) => {
     d=this.title;
     d.textContent=e.value ;
     e.parentNode?.replaceChild(d, e);
+    d.classList.add("title-display")
     this.isInput=false;
     return e.value;
   }

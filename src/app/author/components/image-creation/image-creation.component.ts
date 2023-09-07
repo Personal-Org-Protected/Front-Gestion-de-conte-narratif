@@ -40,15 +40,14 @@ export class ImageCreationComponent implements OnInit {
     }
 
     getUserid(){
-      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
       this.CurrentUser$=this.common.formatUserId(id); 
     }
 
-    innitForm(){
+    innitForm(){//modified
       this.ImageForm=this.formBuilder.group({
         uri: ['',[Validators.required,Validators.maxLength(200)]],
         nomImage:['',[Validators.required, Validators.maxLength(20)]],
-        user_id:[this.CurrentUser$,[Validators.required,Validators.minLength(1)]],
         descriptionImage: ['',[Validators.required,Validators.minLength(20),Validators.maxLength(300)]],
         idTag: ['',[Validators.min(1)]]
       });

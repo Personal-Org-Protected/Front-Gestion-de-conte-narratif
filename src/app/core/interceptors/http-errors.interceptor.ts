@@ -16,7 +16,6 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
 
   
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log("je suis dans l'interceptor error");
     return next.handle(request)
     .pipe(
       
@@ -43,17 +42,16 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
          this.router.navigate(['Error/not-Found']);
         break;
 
-        case 401 && 403:
+      case 401 && 403:
           this.router.navigate(['Error/forbidden']);
          break;
 
-         case 400 && 405 && 406:
+      case 400 && 405 && 406:
           this.router.navigate(['Error/forbidden-operations']);
          break;
     
-         case 0 && 500 && 501 && 503:
+      case 0 && 500 && 501 && 503:
            this.router.navigate(['Error/server']);
-
          break;
     
       default:

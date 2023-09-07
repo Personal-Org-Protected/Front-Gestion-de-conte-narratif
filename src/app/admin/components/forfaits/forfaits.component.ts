@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { Router } from '@angular/router';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
@@ -14,7 +14,7 @@ import { ForfaitDto } from 'src/app/private/models/EntityDto';
   styleUrls: ['./forfaits.component.scss']
 })
 export class ForfaitsComponent implements OnInit {
-
+  isLoading:boolean;
   private Endpoint:string;
   result$:Observable<PaginatedItems<ForfaitDto>>;
   constructor(private forfaitQueryApi:HttpApiQueryService<ForfaitDto>,
@@ -22,11 +22,13 @@ export class ForfaitsComponent implements OnInit {
     private router:Router) {this.Endpoint="Forfait";}
 
   ngOnInit(): void {
+    this.isLoading=true;
     this.getForfait(1);
   }
 
   getForfait(pgNgumber:number){
     this.result$ = this.forfaitQueryApi.getWithPagination(this.Endpoint, pgNgumber);
+    this.isLoading=false;
   }
 
 

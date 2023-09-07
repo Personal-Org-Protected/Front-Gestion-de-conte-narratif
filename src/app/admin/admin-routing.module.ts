@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsAdminGuard } from '../core/guards/is-admin.guard';
 import { AdminComponent } from './admin.component';
 import { CommentaireSignaleComponent } from './components/commentaire-signale/commentaire-signale.component';
 import { ForfaitCreationComponent } from './components/forfait-creation/forfait-creation.component';
 import { ForfaitModificationComponent } from './components/forfait-modification/forfait-modification.component';
 import { ForfaitsComponent } from './components/forfaits/forfaits.component';
+import { SendMessageToUserComponent } from './components/send-message-to-user/send-message-to-user.component';
 import { TagCreationComponent } from './components/tag-creation/tag-creation.component';
 import { TagModificationComponent } from './components/tag-modification/tag-modification.component';
 import { TagsComponent } from './components/tags/tags.component';
@@ -24,8 +26,9 @@ children:[
   {path:'Forfaits',component:ForfaitsComponent},
   {path:'Forfait-creation',component:ForfaitCreationComponent},
   {path:'Forfait-modification/:id',component:ForfaitModificationComponent},
-  {path:'Commentaires',component:CommentaireSignaleComponent}
-]
+  {path:'Commentaires',component:CommentaireSignaleComponent},
+  {path:'Send-message-user/:user_id',component:SendMessageToUserComponent}
+],canActivate:[IsAdminGuard]
 }
 ];
 

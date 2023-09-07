@@ -13,7 +13,6 @@ export class HttpParameterInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log("je suis dans l'interceptor parameter");
     return next.handle(request);
   }
 }

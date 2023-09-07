@@ -81,6 +81,8 @@ export interface StoryTellingDto{
     idZone :number
     numberRef:number
     finished:boolean
+    dateCreation :Date
+    rating:number
 }
 
 export interface StoryBoxesDto{
@@ -95,11 +97,13 @@ export interface FacadeDto{
       url :string
       sypnopsis:string
       price:number
+      forfaitPrice:number
       user_id :string
-       idTag :number
+      idTag :number
       idZone:number
       dateCreation:Date
-       author:AuthorDto
+      rating:number
+      author:AuthorDto
 }
 
 export interface AuthorDto{
@@ -156,6 +160,13 @@ export interface ForfaitDto{
       isForAuthor :boolean
 } */
 
+
+export interface AlreadyRated{
+        rated :number
+        totalRate:number 
+        alreadyRated:boolean
+}
+
 export interface userDisplay{
       user_id :string
       email :string
@@ -164,6 +175,7 @@ export interface userDisplay{
       birthDate :Date
       phoneNumber :string
       description:string
+      avatar :string//new 
 }
 
 
@@ -187,8 +199,8 @@ export interface IsRoleDto{
 }
 
 export interface HaveForfaitDto{
-      HaveForfait :boolean
-      CurrentForfait: number
+      haveForfait :boolean
+      currentForfait: number
 }
 
 
@@ -205,7 +217,7 @@ export interface UserForfaitVM{
 
 export interface HasBeenBoughtDto
 {
-      isBought :boolean
+     isBought :boolean
 }
 
 export interface AlreadyInChapter
@@ -215,5 +227,37 @@ export interface AlreadyInChapter
 
 export interface UserIdDto
 {
-      user_id:string;
+      user_id:string
 }
+
+export interface BasketDto{
+        basket_id :string
+        isEmpty:boolean
+}
+export interface BasketItems{
+      idStoryTelling :number
+}
+
+export interface NotificationDto{
+      idNotification:number
+      title:string
+      message:string
+      read:boolean 
+      created:Date 
+}
+
+
+
+export interface Translator {
+      data: Data
+    }
+    
+    export interface Data {
+      translations: Translation[]
+    }
+    
+    export interface Translation {
+      translatedText: string
+      detectedSourceLanguage: string
+    }
+    

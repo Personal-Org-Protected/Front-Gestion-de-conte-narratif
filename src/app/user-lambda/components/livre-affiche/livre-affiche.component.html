@@ -1,1 +1,92 @@
-<p>livre-affiche works!</p>
+
+
+
+<section class="background vh-100 ">
+    <div class="courses-container">
+      <div class="d-flex course">
+        <div  *ngIf="StoryBoxe.url!=null" class="course-preview" [ngStyle]="{'background-image': 'url('+StoryBoxe.url+')'}">
+
+        </div>
+        <div *ngIf="StoryBoxe.url==null" class="course-preview" [ngStyle]="{'background-image': 'url(src/assetsimages/question-mark-black-monochrome-white.png)'}">
+
+        </div>
+        <div class="course-info">
+
+            <div class="Desciption d-flex flex-column">
+              <h1 class="p-2">
+                  {{StoryBoxe.nameStory}}
+              </h1>
+                <span class="synopsis p-2">
+                  <p>
+                    {{StoryBoxe.sypnopsis}}
+                  </p>
+                </span>
+            </div>
+
+            
+              <div (click)="putInBasket()" *ngIf="!isBought" class="btn">
+                <fa-icon class="details" [icon]="faMoneyBill"></fa-icon>
+              </div>
+           
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- chapitres -->
+
+
+   <div class="container l-container py-4">
+      <div  class="b-game-card mx-4" *ngFor="let item of Chapters.items.slice(0,1)" >
+        <a  routerLink="../../Chapitre-details/{{item.idChapitre}}">
+        <div class="b-game-card__cover "></div>
+        <div>
+          <h1>
+            {{item.story.nomStory}}
+          </h1>
+          <span>
+          <p>
+            {{item.story.textStory.substring(0,20)}}...
+          </p>
+          </span>
+          <div class="d-flex justify-content-end mx-4">
+          <span class="order">
+            {{item.order}}
+          </span>
+        </div>
+        </div>
+      </a>
+      </div>
+    </div> 
+    
+
+  </section>
+
+  <section class="background order  rounded">
+    <div class="Title">
+      <h1>  Commentary Section</h1>
+    </div>
+    <div class="container formcontainer mt-5">
+      <div class="d-flex justify-content-center row">
+          <div class="col-md-8">
+              <div class="d-flex flex-column box" *ngFor="let item of commentaires;let i=index">
+                  <div class=" p-2">
+                      <div class="d-flex flex-row user-info">
+                          <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{(ResultUsers$[i]|async)?.username}}</span><span class="date text-black-50">Shared publicly - {{common.timeFormat(item.dateCreation)}}</span></div>
+                      </div>
+                      <div class="mt-2">
+                          <p class="comment-text">{{item.commentaire}}</p>
+                      </div>
+                  </div>
+
+              </div>
+      </div>
+  </div>
+    </div>
+  <mat-paginator #paginator [length]="(resultCommentary$|async)?.totalCount"
+  [pageSize]="10"
+  aria-label="Select page"
+  (page)="handleCommentaryPageEvent($event)">
+  </mat-paginator>
+  </section> 

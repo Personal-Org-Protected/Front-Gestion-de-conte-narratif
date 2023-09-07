@@ -42,7 +42,7 @@
               <a class="nav-link" routerLink="Public/contact" routerLinkActive="Active">Contact</a>
             </li>
             <li class="nav-item" >
-              <a class="nav-link" routerLink="Public/forfait/{{user_id}}" routerLinkActive="Active" *ngIf="(auth.getStateConnection()|async)">Forfait</a>
+              <a class="nav-link" routerLink="Public/forfait/{{username}}" routerLinkActive="Active" *ngIf="(auth.getStateConnection()|async)">Forfait</a>
             </li>
 
             <li  class="nav-item" *ngIf="isUserLambda()">
@@ -61,16 +61,16 @@
                   aria-labelledby="navbarDropdownFeatures"
                 >
                   <li>
-                    <a class="dropdown-item linkConf"  routerLink="Private/{{user_id}}/User-lambda/Library" routerLinkActive="Active">Library</a>
+                    <a class="dropdown-item linkConf"  routerLink="Private/{{username}}/User-lambda/Library" routerLinkActive="Active">Library</a>
                   </li>
                   <li>
-                    <a class="dropdown-item linkConf" routerLink="Private/{{user_id}}/User-lambda/Store-Librairie" routerLinkActive="Active" >Store</a>
+                    <a class="dropdown-item linkConf" routerLink="Private/{{username}}/User-lambda/Store-Librairie" routerLinkActive="Active" >Store</a>
                   </li> 
                   <li>
-                    <a class="dropdown-item linkConf" routerLink="Private/{{user_id}}/User-lambda/Transactions-liste" routerLinkActive="Active" >Transactions</a>
+                    <a class="dropdown-item linkConf" routerLink="Private/{{username}}/User-lambda/Transactions-liste" routerLinkActive="Active" >Transactions</a>
                   </li>     
                   <li>
-                    <a class="dropdown-item linkConf" routerLink="Private/{{user_id}}/User-lambda/Forfait-acheté" routerLinkActive="Active" >Forfaits</a>
+                    <a class="dropdown-item linkConf" routerLink="Private/{{username}}/User-lambda/Forfait-acheté" routerLinkActive="Active" >Forfaits</a>
                   </li>     
                 </ul>
               </div>
@@ -93,10 +93,10 @@
                   aria-labelledby="navbarDropdownFeatures"
                 >
                   <li>
-                    <a class="dropdown-item linkConf"  routerLink="Private/{{user_id}}/Author/Histoires" routerLinkActive="Active">Histoires</a>
+                    <a class="dropdown-item linkConf"  routerLink="Private/{{username}}/Author/Histoires" routerLinkActive="Active">Histoires</a>
                   </li>
                   <li>
-                    <a class="dropdown-item linkConf" routerLink="Private/{{user_id}}/Author/Images-librairie" routerLinkActive="Active" >Images librairie</a>
+                    <a class="dropdown-item linkConf" routerLink="Private/{{username}}/Author/Images-librairie" routerLinkActive="Active" >Images librairie</a>
                   </li>        
                 </ul>
               </div>
@@ -120,16 +120,16 @@
                 aria-labelledby="navbarDropdownFeatures"
               >
                 <li>
-                  <a class="dropdown-item linkConf"  routerLink="Private/{{user_id}}/Admin/Users-liste" routerLinkActive="Active">Users</a>
+                  <a class="dropdown-item linkConf"  routerLink="Private/{{username}}/Admin/Users-liste" routerLinkActive="Active">Users</a>
                 </li>      
                 <li>
-                  <a class="dropdown-item linkConf"  routerLink="Private/{{user_id}}/Admin/Tags" routerLinkActive="Active">Tags</a>
+                  <a class="dropdown-item linkConf"  routerLink="Private/{{username}}/Admin/Tags" routerLinkActive="Active">Tags</a>
                 </li>    
                 <li>
-                  <a class="dropdown-item linkConf"  routerLink="Private/{{user_id}}/Admin/Commentaires" routerLinkActive="Active">Commentaires</a>
+                  <a class="dropdown-item linkConf"  routerLink="Private/{{username}}/Admin/Commentaires" routerLinkActive="Active">Commentaires</a>
                 </li>    
                 <li>
-                  <a class="dropdown-item linkConf"  routerLink="Private/{{user_id}}/Admin/Forfaits" routerLinkActive="Active">Forfaits</a>
+                  <a class="dropdown-item linkConf"  routerLink="Private/{{username}}/Admin/Forfaits" routerLinkActive="Active">Forfaits</a>
                 </li>      
               </ul>
             </div><!--pas oublier la secutrité-->
@@ -141,16 +141,15 @@
     
         <!-- Right elements -->
         <div class="d-flex align-items-center">
-    
+          
           <!-- Notifications -->
-          <div class="dropdown">
-            <a
-              class="text-reset me-3 dropdown-toggle hidden-arrow"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
+          <div class="dropdown" *ngIf="(auth.getStateConnection() |async)===true">
+            <span
+            class="dropdown-toggle mx-4" 
+            role="button" 
+            id="dropdownMenuLink" 
+            data-bs-toggle="dropdown" 
+            aria-expanded="false"
             >
             <img
             src="assets/logo/bell-svgrepo-com.svg"
@@ -158,22 +157,54 @@
             alt="bell Logo"
             loading="lazy"
           />
-            <span class="badge rounded-pill badge-notification bg-danger px-1">1</span>
-            </a>
+          <span *ngIf="(countNotif|async)==0" class="badge rounded-pill badge-notification bg-danger px-1"></span>
+          <span  *ngIf="(countNotif|async)!>0"class="badge rounded-pill badge-notification bg-danger px-1">{{(countNotif|async)}}</span>
+          </span>
             <ul
-              class="dropdown-menu dropdown-menu-end"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdownMenuAvatar"
+          >
+          <li *ngIf="!(countNotif|async)">
+            <span class="dropdown-item linkConf">No Notifications</span>
+          </li>
+          <li  *ngFor="let item of resultNotif.items" (click)="readNotif(item.idNotification)" >
+            <span class="dropdown-item linkConf text-left">
+              <h3 class=" text-uppercase font-weight-bold p-1">{{item.title}}</h3>
+              <p class="text-center font-weight-light p-1"><b>{{item.message}}</b></p>
+              <h6 class="d-flex justify-content-end  font-italic p-1">{{common.timeFormat(item.created)}}</h6>
+            </span>
+          </li>
+          <div *ngIf="(countNotif|async)!>5" class="d-flex justify-content-between">
+            <span (click)="changePage(-1)"  *ngIf="resultNotif.pageNumber>1">
+            <fa-icon class="btn" [icon]="faArrowLeft"></fa-icon>
+          </span>
+          <span (click)="changePage(1)" *ngIf="resultNotif.pageNumber>resultNotif.totalPages">
+            <fa-icon class="btn" [icon]="faArrowRight"></fa-icon>
+          </span>
+        </div>
+          </ul>
+          </div>
+
+          <!--Basket-->
+          <div *ngIf="(auth.getStateConnection() |async)===true">
+          <a
+          class="text-reset me-3 dropdown-toggle hidden-arrow"
+          routerLink="Private/{{username}}/User-lambda/Transaction-process"
+          routerLinkActive="Active"
+          id="navbarDropdownMenuLink"
+          role="button"
+          aria-expanded="false"
+        >
+        <img
+        src="assets/logo/basket-color-svgrepo-com.svg"
+        height="38"
+        alt="bell Logo"
+        loading="lazy"
+      />
+        <span *ngIf="(countBasket|async)==0" class="badge rounded-pill badge-notification bg-danger px-1"></span>
+        <span  *ngIf="(countBasket|async)!>0"class="badge rounded-pill badge-notification bg-danger px-1">{{(countBasket|async)}}</span>
+        </a>
+
           </div>
           <!-- Avatar -->
           <div class="dropdown">
@@ -196,8 +227,11 @@
               <li  *ngIf="(auth.getStateConnection() |async)===true">
                 <a class="dropdown-item linkConf" (click)="logout()" routerLinkActive="Active">Logout</a>
               </li>
-              <li>
-                <a routerLink="Public/Signup" class="dropdown-item linkConf" href="#">Sign Up</a>
+              <li *ngIf="(auth.getStateConnection() |async)===false">
+                <a routerLink="Public/Signup" class="dropdown-item linkConf" >Sign Up</a>
+              </li>
+              <li *ngIf="(auth.getStateConnection() |async)===true">
+                <a routerLink="Private/{{username}}/User-info" class="dropdown-item linkConf" >Account</a>
               </li>
     
             </ul>

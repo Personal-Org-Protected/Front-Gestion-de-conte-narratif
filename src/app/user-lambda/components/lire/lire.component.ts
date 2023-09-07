@@ -52,7 +52,7 @@ Image!:ImageDto;
   }
 
   getUserid(){
-    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
     this.CurrentUser$=this.common.formatUserId(id); 
   }
 
@@ -64,7 +64,7 @@ Image!:ImageDto;
   }
 
   getBox(){
-    this.paramRouteIdBox$=this.route.snapshot.paramMap.get('idBox')?? "No value";
+    this.paramRouteIdBox$=this.route.snapshot.paramMap.get('id')?? "No value";
   }
 
 
@@ -204,7 +204,7 @@ this.lastPageChecked$=order;
         openTimer = setTimeout(() => {
          book.classList.add("expanded");
          this.isExpanded = true;
-        }, 800);
+        }, 1300);
        }, 1500);
 
       }

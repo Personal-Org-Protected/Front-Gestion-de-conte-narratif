@@ -5,9 +5,9 @@ import { HttpApiCommandService } from 'src/app/private/http/Command-Services/htt
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
 import { PaginatedItems, Result } from 'src/app/private/models/Common';
 import { Image } from 'src/app/private/models/Entity';
-import { AlreadyInChapter, ImageDto } from 'src/app/private/models/EntityDto';
+import { AlreadyInChapter, ImageDto, IsRoleDto } from 'src/app/private/models/EntityDto';
 import {faTrash,faEye,faCloud,faEdit} from '@fortawesome/free-solid-svg-icons'
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from 'src/app/private/services/common.service';
 
@@ -28,12 +28,13 @@ export class ImagesComponent implements OnInit {
    Images:Array<ImageDto>;
    private result$:Observable<Result>;
    isImagesUsed:Array<Observable<AlreadyInChapter>>
-
+isAuthor:boolean;
 
   constructor(private imageApiQuery:HttpApiQueryService<ImageDto>,
     private imageApiCommand:HttpApiCommandService<Image>,
     private imageChapterApiQuery:HttpApiQueryService<AlreadyInChapter>,
-    private common:CommonService,
+    public common:CommonService,
+    private userRolesApiQuery:HttpApiQueryService<IsRoleDto>,
     private route:ActivatedRoute) { }
 
   async ngOnInit(): Promise<void> {
@@ -43,6 +44,7 @@ export class ImagesComponent implements OnInit {
     this.Endpoint="SearchImage"
     this.Images=new Array<ImageDto>;
     await this.getImages(this.lastPageChecked,0);
+    await this.userAuthor();
   }
 
 
@@ -52,10 +54,9 @@ export class ImagesComponent implements OnInit {
   }
 
 
-  async getImages(pgNumber:number,idTag:number){
+  async getImages(pgNumber:number,idTag:number){//modified
     let params= new HttpParams();
     params=params.append("pgNumber",pgNumber);
-    params=params.append("user_id",this.CurrentUser$);
     params=params.append("idTag",idTag);
     this.resultImages$=this.imageApiQuery.getWithPaginationParams(this.Endpoint,params);
     const response=await lastValueFrom(this.resultImages$)
@@ -88,5 +89,10 @@ export class ImagesComponent implements OnInit {
     this.getImages(this.lastPageChecked,this.idTag);
   }
 
-
+  async userAuthor(){
+    const endpoint="UserRoles/isAuthor"
+    const response=this.userRolesApiQuery.get(endpoint);
+    const result=await lastValueFrom(response);
+    this.isAuthor=result.isRole;
+   }
 }

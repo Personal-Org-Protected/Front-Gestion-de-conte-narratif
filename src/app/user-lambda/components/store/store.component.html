@@ -2,39 +2,76 @@
     <section class="wrapper background vh-100 d-flex">
         <div class=" col-md-2  scroll">
           <div class="w-75 tags vh-100">
-              <a  *ngFor="let item of resultTag$.tags" class="my-2">
-                <button *ngIf="item as tag" (click)="getBooks(tag.idTag)" class=" btn third"> 
-                {{item.nameTag}}
+              <a  routerLinkActive="Active" *ngFor="let item of resultTag$.tags" class="my-2">
+                <button *ngIf="item as tag" (click)="getBooks(' ',false,false,tag.idTag)" class=" buton third"> 
+                <p *ngIf="item.nameTag=='Default'">All</p>
+                <p *ngIf="item.nameTag!='Default'">{{item.nameTag}}</p>
               </button>
             </a>
           </div>
       </div>
-
+<div>
+  <div (click)="pannelDisplay()" class="m-3 btn filter"><fa-icon [icon]="faFilter"></fa-icon></div>
+  <div class="container p-2 mb-2 alignment ">
+      <div class="w-100 d-flex justify-content-end "><fa-icon class="btn" (click)="pannelDiseapear()" [icon]="faCross"></fa-icon></div>
+      <div class="w-100 d-flex justify-content-center">
+          <input class="dark-light" type="checkbox" id="dark-light" name="dark-light"/>
+          
+          <div class="d-flex flex-column ">
+            <div class="container my-4"> 
+              <div class="search"> <div class="row"> 
+                <div class="col-md-6"> <div class="search-1"> <i class='bx bx-search-alt'></i> 
+                  <input type="text" placeholder="Title" name="search" #search> </div> </div> <div class="col-md-6"> 
+                    <div> <div class="search-2"> <i class='bx bxs-map' ></i> <input type="text" placeholder="San Francisco,USA">
+                       <button (click)="getBooks(search.value,false,false)" >Search</button> </div> </div> </div> </div> </div>
+          </div>
+                    <div class="sec-center  my-4"> 	
+                        <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+                        <label class="for-dropdown d-flex justify-content-between p-3" for="dropdown"><fa-icon [icon]="faEye"></fa-icon> Order<i class="uil uil-arrow-down"></i></label>
+                        <div class="section-dropdown text-light"> 
+                            <a  routerLinkActive="active" (click)="getBooks(search.value,false,false,CurrentTag$)"  >Date Creation <i class="uil uil-arrow-right"></i></a>
+                            <a  routerLinkActive="active" (click)="getBooks(search.value,false,true,CurrentTag$)"  >Price <i class="uil uil-arrow-right"></i></a>
+                            <a routerLinkActive="active" (click)="getBooks(search.value,true,false,CurrentTag$)"  >Rating <i class="uil uil-arrow-right"></i></a>
+                        </div>
+                    </div>
+          </div>
+      </div>
+   </div>
+</div>
         <div class="container d-flex flex-wrap py-5">
 
         <div class="card mx-3" data-effect="zoom" *ngFor="let item of StoryTells; let i = index">
-          <a routerLink="../Transaction-process/{{item.idStoryTelling}}" class="card__save  js-save" >
-            <fa-icon class="" [icon]="faMoneyBill"></fa-icon>
-          </a>
+          <div class="d-flex justify-content-between">          
+            <p class="card__date m-1">{{common.timeFormat(item.dateCreation)}}</p>
+            <a routerLink="../livre/{{item.idStoryTelling}}" class=" w-10 d-flex justify-content-center" >
+              <fa-icon class="" [icon]="faEye"></fa-icon>
+            </a></div>
           <figure  class="card__image">
             <img src="{{item.url}}" alt="Short description">
           </figure>
           <div class="card__header">
+            <h3 class="mx-3 card__name">{{item.nameStory}}</h3>
           </div>
           <div class="card__body">
-            <h3 class="card__name">{{item.nameStory}}</h3>
             <p class="card__job">Written by {{item.author.username}}</p>
             <p class="card__bio"> {{item.sypnopsis.substring(0,20)}}...</p>
           </div>
-          <div class="card__footer">
-            <p class="card__date">{{item.dateCreation}}</p>
-            <p class="mx-3">{{Storytag(item.idTag)}}</p>
+          <div class="card__footer d-flex justify-content-between">
+            <p class="mx-1 d-flex align-self-end">{{Storytag(item.idTag)}}</p>
+            <div *ngIf="hasForfait.currentForfait!=1" >          
+              <p class="mx-1"><s>{{item.price}} $</s></p>
+              <p class="mx-1">{{item.forfaitPrice}} $</p>
+            </div>
+            <div *ngIf="hasForfait.currentForfait==1" >          
+              <p class="mx-1">{{item.price}} $</p>
+            </div>
+
           </div>
         </div>
     </div>
       </section>
 <mat-paginator #paginator [length]="(Result$|async)?.totalCount"
-[pageSize]="10"
+[pageSize]="8"
 aria-label="Select page"
 (page)="handlePageEvent($event)">
 </mat-paginator> 

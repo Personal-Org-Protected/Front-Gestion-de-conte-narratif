@@ -2,7 +2,8 @@
 
 
 <section class="BackGround vh-100">
-<div class="container" >
+    <div class="d-flex justify-content-center"><mat-spinner class="m-5"   *ngIf="isLoading" mode="indeterminate" ></mat-spinner></div>
+<div *ngIf="!isLoading" class="container" >
     <div class="row pt-4 d-flex">
         <div class="col-3"  *ngFor="let res of Users$.items; let i = index">
             <div class="card user-card">
@@ -12,7 +13,8 @@
                 </div>
                 <div class="card-block" >
                     <div class="user-image">
-                        <img src="../../../../assets/images/abstract-user-flat-4.png" class="img-radius" alt="User-Profile-Image">
+                        <img *ngIf="res.avatar==null" src="../../../../assets/images/abstract-user-flat-4.png" class="img-radius" alt="User-Profile-Image">
+                        <img *ngIf="res.avatar!=null"  src="{{res.avatar}}" class="img-radius" alt="User-Profile-Image">
                     </div>
                      <h6 class="f-w-600 m-t-25 m-b-10">{{res.username}}</h6> 
                     <hr>
@@ -36,7 +38,7 @@
 </div>
 </section> 
 <mat-paginator #paginator [length]="(result$|async)?.totalCount"
-[pageSize]="30"
+[pageSize]="8"
 aria-label="Select page"
 (page)="handlePageEvent($event)">
 </mat-paginator>

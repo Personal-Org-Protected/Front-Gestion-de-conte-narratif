@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable, OnInit } from '@angular/core';
-import { AuthService, IdToken } from '@auth0/auth0-angular';
-import { firstValueFrom } from 'rxjs';
+import { AuthService, IdToken, User } from '@auth0/auth0-angular';
+import { firstValueFrom, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class AuthServicesService{
   }
 
   getUser(){
-   return this.auth.user$;
+   return this.auth.user$ as Observable<User>;
   }
 
   getTokenClaims(){

@@ -39,15 +39,14 @@ export class StoryTellCreationComponent implements OnInit {
     }
 
     getUserid(){
-      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
       this.CurrentUser$=this.common.formatUserId(id); 
     }
     
-innitForm(){
+innitForm(){//modified
   this.StoryTellForm=this.formBuilder.group({
     url: ['',[Validators.maxLength(200)]],
     nameStory:['',[Validators.required,Validators.maxLength(20)]],
-    user_id:[this.CurrentUser$,[Validators.required,Validators.minLength(1)]],
     price:['',[Validators.required,Validators.min(0)]],
     synopsis: ['',[Validators.required,Validators.minLength(20),Validators.maxLength(300)]],
     idTag: ['',[Validators.min(1)]]

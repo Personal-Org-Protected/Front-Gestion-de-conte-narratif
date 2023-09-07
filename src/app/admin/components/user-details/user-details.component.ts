@@ -16,12 +16,14 @@ export class UserDetailsComponent implements OnInit {
 
   private EndPoint:string;
   private ParamRoute$:string;
- private  userAuthForm:FormGroup;
+  private  userAuthForm:FormGroup;
   // InternResult$:Observable<any>;
   User$:userDisplay;
   result$:Observable<userDisplay>;
   resultRole$:Observable<UserRolesVM>
   CurrentUser$:string;
+  isLoading:boolean;
+
   constructor(
     private userRolesQueryApi:HttpApiQueryService<UserRolesVM>,
     private userQueryApi:HttpApiQueryService<userDisplay> ,
@@ -34,6 +36,7 @@ export class UserDetailsComponent implements OnInit {
    }
 
     ngOnInit(): void {
+    this.isLoading=true;
         this.getId();
         this.getUserid();
          this.getUserDetails(this.ParamRoute$);
@@ -41,7 +44,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getUserid(){
-    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
     this.CurrentUser$=id;
   }
   getId(){
@@ -55,6 +58,7 @@ export class UserDetailsComponent implements OnInit {
   getRolesUser(user_id:string){
     const endpoint="UserRoles"
     this.resultRole$=this.userRolesQueryApi.getWithDetails(endpoint,user_id);
+    this.isLoading=false;
   }
   async getUserDetails(user_id:string){
     this.result$=this.userQueryApi.getWithDetails(this.EndPoint, this.ParamRoute$);

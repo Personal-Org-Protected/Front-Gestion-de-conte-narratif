@@ -1,7 +1,11 @@
 <section class="background vh-100">
 
     <div *ngIf="StoryBoxes.items.length>0" class="container py-5">
-        <div *ngIf="StoryBoxes.items.length>0" class="wood-text py-2"><h1>{{Library.nameLibrary}}</h1></div>
+        <div *ngIf="StoryBoxes.items.length>0" class="d-flex  py-2">
+          <h6><fa-icon (click)="process()" class="btn text-info mx-1" [icon]="faEdit"></fa-icon></h6>
+          <h1 class="title wood-text">{{Library.nameLibrary}}</h1>
+        
+        </div>
 
         <div   class="row py-4 my-5">
     <div  class="d-flex justify-content-center ">

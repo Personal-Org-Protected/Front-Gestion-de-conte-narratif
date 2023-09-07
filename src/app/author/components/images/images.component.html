@@ -2,30 +2,29 @@
 
 <section class="background vh-100">
     <div class="container py-5">
-      <div class="" *ngIf="Images!=null">
-         <a routerLink="../Images-creation"><button class="btn third"> Create</button></a>
+      <div class="" *ngIf="Images!=null && isAuthor">
+         <a  class="size btn third" class="size btn third" routerLink="../Images-creation"> Create</a>
        </div>
         <div class="row d-flex justify-content-center align-self-center">
                 <div class="flip m-4" *ngFor="let item of Images; let i = index" >
                     <div class="front" id="box" [ngStyle]="{'background-image': 'url(' + item.uri + ')'}">
                        <h1 class="text-shadow">{{item.nomImage}}</h1>
                     </div>
-                    <div class="back d-flex justify-content-end mx-2">
-                        <div><h2>  crée le {{item.dateCreation}}</h2>
+                    <div class="back mx-2 d-flex flex-column justify-content-between">
+                        <div><h2 class="back d-flex justify-content-end mx-2" >crée le {{common.timeFormat(item.dateCreation)}}</h2>
                             <p>{{item.descriptionImage}}</p></div>
-                            <div class="d-flex align-self-end">
+                            <div class="d-flex justify-content-end" *ngIf="isAuthor">
                                 <a class="px-2" routerLink="../Images-modification/{{item.idImage}}"><fa-icon class="text-info " [icon]="faEdit"></fa-icon></a>
                                 <a *ngIf="!(isImagesUsed[i]|async)?.isAlreadyInChapter" type="button" (click)="deleteImage(item.idImage)" ><fa-icon class="text-danger " [icon]="faTrash"></fa-icon></a>
                             </div>
                     </div>
             </div>
-
         </div>
     </div>
 </section>
 
 <mat-paginator #paginator [length]="(resultImages$|async)?.totalCount"
-[pageSize]="5"
+[pageSize]="4"
 aria-label="Select page"
 (page)="handlePageEvent($event)">
 </mat-paginator>

@@ -12,7 +12,7 @@
           <p class="card-text">Reduction: {{item.reduction}}</p>
           <div class="d-flex justify-content-around ">
             <a routerLink="/Public/forfait/{{CurrentUser$}}" class="btn mx-2"><fa-icon class="px-2" [icon]="faEye"></fa-icon>other Packages</a>
-            <a (click)="resiliate(item.idForfait,item.roleId)" class="btn mx-2"><fa-icon class="px-2" [icon]="faStop"></fa-icon>Resiliate</a>
+            <a *ngIf="item.idForfait!=1" (click)="resiliate(item.idForfait,item.roleId)" class="btn mx-2"><fa-icon class="px-2" [icon]="faStop"></fa-icon>Resiliate</a>
           </div>
 
         </div>

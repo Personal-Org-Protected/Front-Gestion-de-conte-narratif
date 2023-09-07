@@ -1,16 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { ConnectableObservable, first, lastValueFrom, Observable, observeOn, of, queueScheduler } from 'rxjs';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
-import { PaginatedItems } from 'src/app/private/models/Common';
+import { PaginatedItems, Result } from 'src/app/private/models/Common';
 import { CommentaryDto, userDisplay } from 'src/app/private/models/EntityDto';
-import {faTrash,faCheckDouble,faEye} from '@fortawesome/free-solid-svg-icons'
+import {faTrash,faCheckDouble,faEye,faEnvelope} from '@fortawesome/free-solid-svg-icons'
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
 import { Commentary } from 'src/app/private/models/Entity';
 import { MatDialog } from '@angular/material/dialog';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { SendMessageToUserComponent } from '../send-message-to-user/send-message-to-user.component';
 
 @Component({
   selector: 'app-commentaire-signale',
@@ -22,18 +23,21 @@ export class CommentaireSignaleComponent implements OnInit {
   faEye=faEye;
   faTrash=faTrash;
   faCheckDouble=faCheckDouble;
-  private CurrentPage:number;
+  faEnvelope=faEnvelope;
   result$:Observable<PaginatedItems<CommentaryDto>>;
   resultCommentary$:Array<CommentaryDto>;
   resultUser$:Array<Observable<userDisplay>>;
-
+  isLoading:boolean;
   private Endpoint:string;
+  private CurrentPage:number;
+
   constructor(private commentaryQueryApi:HttpApiQueryService<CommentaryDto>,
     private userQueryApi:HttpApiQueryService<userDisplay>,
     private commentaryCommandApi:HttpApiCommandService<Commentary>,
     public dialog: MatDialog) { this.Endpoint="Commentary/Signal";}
 
   async ngOnInit(): Promise<void> {
+    this.isLoading=true;
     this.resultCommentary$=new Array<CommentaryDto>;
     this.resultUser$=new Array<Observable<userDisplay>>;
     this.CurrentPage=1;
@@ -61,6 +65,7 @@ export class CommentaireSignaleComponent implements OnInit {
        this.getUser(m.user_id);
       });
     });
+    this.isLoading=false;
   }
 
 
@@ -81,6 +86,17 @@ export class CommentaireSignaleComponent implements OnInit {
 
   }
 
+  async openTxtMessage(user:Observable<userDisplay>){
+    const response= lastValueFrom(user)
+
+    response.then(async(res)=>{
+      const dialog=this.dialog.open(SendMessageToUserComponent,{
+        data:res.user_id
+      });
+      const result= await lastValueFrom(dialog.afterClosed())as Result;
+      console.log(result);
+    })
+  }
 
   handlePageEvent(event:PageEvent){
     this.CurrentPage=event.pageIndex+1;

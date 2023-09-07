@@ -10,6 +10,7 @@ import { ProjectComponent } from './components/project/project.component';
 import { PublicHomeComponent } from './components/public-home/public-home.component';
 import { UserCreationComponent } from './components/user-creation/user-creation.component';
 import { PublicComponent } from './public.component';
+import { TrueUserGuard } from '../core/guards/true-user.guard';
 
 const routes: Routes = [
   {path:'',
@@ -18,7 +19,7 @@ children:[
   {path:'modus-operandi',component:ModusOperandiComponent},
   {path:'about-us',component:AboutUsComponent},
   {path:'contact',component:ContactComponent},
-  {path:'forfait/:user_id',component:ForfaitComponent,canActivate:[AuthGuard]},
+  {path:'forfait/:username',component:ForfaitComponent,canActivate:[AuthGuard]},
   {path:'Signup',component:UserCreationComponent}
 ]
 }

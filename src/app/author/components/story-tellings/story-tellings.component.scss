@@ -87,11 +87,11 @@ $dark:#131325;
     & a.modify{
       margin: 2%;
       cursor:pointer;
-      color:rgb(255, 146, 146);
+      color:rgb(223, 117, 117);
       border:none;
       outline:none;
       border-radius:4px;
-      background-color:#e7743f;
+      background-color:#a50606;
       padding:15px 20px;
       font-family:'Montserrat';
       font-weight:bold;
@@ -229,6 +229,7 @@ $speed: 0.5s;
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
+  justify-content: center;
 
   &:hover,
   &:focus {
@@ -250,8 +251,9 @@ transition: all 150ms ease-in-out;
 }
 }
 
-.scroll{
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
+.size{
+  width: 15%;
 }
+
+
+//stars rating

@@ -70,4 +70,15 @@ export interface UpdateUser{
     
 }
 
+export interface Basket{
+    
+}
+export interface BasketItems{
+    
+}
+
+export interface Notification{
+    
+}
+
 

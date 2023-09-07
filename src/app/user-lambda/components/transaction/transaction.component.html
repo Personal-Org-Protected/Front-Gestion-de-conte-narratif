@@ -17,8 +17,8 @@
                             <tbody>
                                 <tr *ngFor="let item of (result$|async)?.items">
                                     <td>  <p>{{item.nameBook}} </p>  <p href="#" class="text-body"> {{item.storyTellId}}</p></td>
-                                    <td><span class="badge badge-soft-success mb-0">{{item.price}}</span></td>
-                                    <td>{{item.dateTransaction}}</td>                                    
+                                    <td><span class="badge badge-soft-primary mb-0">{{item.price}} $</span></td>
+                                    <td> {{common.timeFormat(item.dateTransaction)}}</td>                                    
                                 </tr>
                                
                             </tbody>

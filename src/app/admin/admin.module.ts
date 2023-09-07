@@ -15,6 +15,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SharedModule } from '../shared/shared.module';
 import { TagCreationComponent } from './components/tag-creation/tag-creation.component';
 import { TagModificationComponent } from './components/tag-modification/tag-modification.component';
+import { SendMessageToUserComponent } from './components/send-message-to-user/send-message-to-user.component';
 //import {MatFormFieldModule} from '@angular/material/form-field'; 
 
 
@@ -31,6 +32,7 @@ import { TagModificationComponent } from './components/tag-modification/tag-modi
     ForfaitsComponent,
     TagCreationComponent,
     TagModificationComponent,
+    SendMessageToUserComponent,
 
   ],
   imports: [

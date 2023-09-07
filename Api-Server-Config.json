@@ -1,5 +1,5 @@
 {
     "default" : {
-    "uri":"https://localhost:7031/api/v1/"
+    "uri":"https://localhost:44310/api/v1/"
     }
 }

@@ -1,0 +1,13 @@
+
+    <h1 mat-dialog-title>Avatar :</h1>
+    <div class="text-danger w-100 gradient-custom py-3"  mat-dialog-content>
+        <div class="col-md-4  text-center text-white  w-100">
+          <img  *ngIf="image!=null" src="{{image}}"
+          alt="Avatar" class="img-fluid my-5 rounded-circle " style="width: 150px;" />
+          <img *ngIf="image==null"  src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+          alt="Avatar" class="img-fluid my-5 rounded-circle imageConf"/>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+        <a  (click)="chosenImage()"><fa-icon class="btn" [icon]="faCheck"></fa-icon></a><input id="image" (change)="loadImage()" placeholder="image url" type="text">
+    </div>

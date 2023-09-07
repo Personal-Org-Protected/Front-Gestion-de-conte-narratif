@@ -6,7 +6,94 @@
     overflow: hidden;
 }
 
+.card-bg{
+    background: rgb(205,204,75);
+    background: linear-gradient(17deg, rgba(205,204,75,1) 13%, rgba(168,252,149,1) 51%, rgba(56,145,135,0.9135855025603992) 88%);
+}
 
+
+.button {
+    display: inline-block;
+    padding: .75rem 1.25rem;
+    border-radius: 10rem;
+    color: #6ec5dd;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: .15rem;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color:#6ec5dd;
+      border-radius: 10rem;
+      z-index: -2;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 100%;
+      background-color: darken(#6ec5dd, 15%);
+      transition: all .3s;
+      border-radius: 10rem;
+      z-index: -1;
+    }
+    &:hover {
+      color: #fff;
+      &:before {
+        width: 100%;
+      }
+    }
+  }
+
+
+
+  .valid {
+    width: 180px;
+    height: 60px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid #91C9FF;
+    outline: none;
+    transition: 1s ease-in-out;
+  }
+  
+  svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    fill: none;
+    stroke: #fff;
+    stroke-dasharray: 150 480;
+    stroke-dashoffset: 150;
+    transition: 1s ease-in-out;
+  }
+  
+  .valid:hover {
+    transition: 1s ease-in-out;
+    background: #4F95DA;
+  }
+  
+  .valid:hover svg {
+    stroke-dashoffset: -480;
+  }
+  
+  .valid span {
+    color: white;
+    font-size: 18px;
+    font-weight: 100;
+  }
+
+/* 
 p {
     margin: 0%;
 }
@@ -296,4 +383,4 @@ input[type="radio"] {
     ::placeholder {
         font-size: 9px;
     }
-}
+} */

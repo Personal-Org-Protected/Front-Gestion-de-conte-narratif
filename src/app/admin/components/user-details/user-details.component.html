@@ -1,13 +1,20 @@
 <section class="vh-100">
-    <div class="container py-5 h-100">
+  <div class="d-flex justify-content-center"><mat-spinner class="m-5"   *ngIf="isLoading" mode="indeterminate" ></mat-spinner></div>
+
+    <div *ngIf="!isLoading" class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-lg-8 mb-4 mb-lg-0">
           <div class="card mb-3" style="border-radius: .5rem;">
             <div class="row g-0">
               <div class="col-md-4 gradient-custom text-center text-white"
                 style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                  alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                <div class="avatar">
+                  <img  *ngIf="User$.avatar!=null" src="{{User$.avatar}}"
+                  alt="Avatar" class="img-fluid my-5 rounded-circle" style="width: 200px;"  />
+                  <img *ngIf="User$.avatar==null" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                  alt="Avatar" class="img-fluid my-5 rounded-circle" style="width: 200px;" />
+                </div>
+                  
                 <h5>Username :</h5> <p class="response">{{User$.username}}</p>
                 <div><h3>Roles :</h3><div *ngFor="let role of (resultRole$|async)?.userRoles"><p class="response">{{role.roleLibelle}}</p></div></div>
                 
@@ -48,7 +55,7 @@
                         <div class="col-auto m-2"><a href="#!"><i class="fa fa-instagram text-instagram"></i></a></div>
                       </div>
                       <div class="d-flex">
-                        <a routerLink="/Private/Admin/User-forfaits/{{(result$|async)?.user_id}}">
+                        <a routerLink="/Private/{{CurrentUser$}}/Admin/User-forfaits/{{(result$|async)?.user_id}}">
                             <div class="btn btn-primary m-2">
                                 Forfaits
                           </div>

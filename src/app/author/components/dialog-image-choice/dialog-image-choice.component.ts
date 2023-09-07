@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit,Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
 import { PaginatedItems } from 'src/app/private/models/Common';
@@ -19,22 +19,21 @@ export class DialogImageChoiceComponent implements OnInit {
   LastPageChecked$:number;
   resultImage$:Observable<PaginatedItems<ImageDto>>;
   Images:Array<ImageDto>;
-  constructor( @Inject(MAT_DIALOG_DATA) private data: string,
+  constructor(
   private imageApiQuery: HttpApiQueryService<ImageDto>,
   public dialogRef: MatDialogRef<DialogImageChoiceComponent>,) { }
 
  async ngOnInit(): Promise<void> {
     this.LastPageChecked$=1;
     this.Images=new Array<ImageDto>;
-    await this.getImages(this.LastPageChecked$,this.data);
+    await this.getImages(this.LastPageChecked$);
   }
 
 
-  async getImages(pgNumber:number,user_id:string){
+  async getImages(pgNumber:number){
     const endpoint="SearchImage"
     let params=new HttpParams();
     params=params.append("pgNumber",pgNumber);
-    params=params.append("user_id",user_id);
     this.resultImage$=this.imageApiQuery.getWithPaginationParams(endpoint,params);
     const response=await lastValueFrom(this.resultImage$);
     this.Images=response.items;
@@ -48,7 +47,7 @@ export class DialogImageChoiceComponent implements OnInit {
 
   handlePageEvent(event:PageEvent){
     this.LastPageChecked$= event.pageIndex+1
-    this.getImages(this.LastPageChecked$,this.data);
+    this.getImages(this.LastPageChecked$);
   }
 
 

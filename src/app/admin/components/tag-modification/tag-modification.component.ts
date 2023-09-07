@@ -23,6 +23,7 @@ export class TagModificationComponent implements OnInit {
   result$:Observable<Result>;
   private ParamRoute$:string;
   private Endpoint:string;
+  CurrentUser$:string;
 
    constructor(private formBuilder:FormBuilder,
      private TagCommandApi: HttpApiCommandService<Tag>,
@@ -32,6 +33,7 @@ export class TagModificationComponent implements OnInit {
      ) { this.Endpoint="Tag"}
  
      ngOnInit(): void {//changer le nom des proprietes
+      this.getUserid();
       this.getId();
       this.getData(this.ParamRoute$);
       this.TagForm=this.formBuilder.group({
@@ -40,13 +42,17 @@ export class TagModificationComponent implements OnInit {
       });
     }
  
+    getUserid(){
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
+      this.CurrentUser$=id;
+    }
      onSubmit(){
      if(this.TagForm.valid){
        this.result$=this.TagCommandApi.put(this.TagForm.value,this.Endpoint,this.ParamRoute$);    
       let response=lastValueFrom(this.result$);
       response.then((res)=>{
       console.log(res);
-      this.router.navigate(['../Tags']);
+      this.router.navigate(['/Private/'+this.CurrentUser$+'/Admin/Tags']);
       })
      }
     }

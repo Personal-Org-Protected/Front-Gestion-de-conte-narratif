@@ -18,6 +18,7 @@ export class ForfaitModificationComponent implements OnInit {
   ForfaitForm : FormGroup;
   result$:Observable<Result>;
   data$ : Observable<ForfaitDto>;
+  CurrentUser$:string;
 
   private ParamRoute$:string;
   private Endpoint:string;
@@ -27,11 +28,16 @@ export class ForfaitModificationComponent implements OnInit {
      ) { this.Endpoint="Forfait"}
  
      ngOnInit(): void {//changer le nom des proprietes
+      this.getUserid();
       this.getId();
       this.getData(this.ParamRoute$);
       this.implementForm();
     }
 
+    getUserid(){
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
+      this.CurrentUser$=id;
+    }
     implementForm(){
       this.ForfaitForm=this.formBuilder.group({
         idForfait:['',[Validators.required,Validators.min(1)]],
@@ -48,7 +54,7 @@ export class ForfaitModificationComponent implements OnInit {
        this.result$=this.forfaitCommandApi.put(this.ForfaitForm.value,this.Endpoint,this.ParamRoute$);
        lastValueFrom(this.result$).then((response)=>{
         console.log(response);
-        this.router.navigate(['../Forfaits']);
+        this.router.navigate(['/Private/'+this.CurrentUser$+'/Admin/Forfaits']);
        }); 
        console.log(this.ForfaitForm.value);
 

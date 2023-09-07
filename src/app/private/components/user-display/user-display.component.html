@@ -1,0 +1,69 @@
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-8 mb-4 mb-lg-0">
+          <div class="card mb-3" style="border-radius: .5rem;">
+            <div class="row g-0">
+              <div class="col-md-4 gradient-custom text-center text-white">
+                <div >
+                  <img  *ngIf="User$.avatar!=null"  (click)="changeAvatar()" src="{{User$.avatar}}"
+                  alt="Avatar" class="img-fluid my-5 rounded-circle" style="width: 200px;" />
+                  <img *ngIf="User$.avatar==null" (click)="changeAvatar()" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                  alt="Avatar" class="img-fluid my-5 rounded-circle" style="width: 200px;" /></div>
+                <h5>Username :</h5> <p class="response">{{User$.username}}</p>
+                <div><h3>Roles :</h3><div *ngFor="let role of (resultRole$|async)?.userRoles"><p class="response">{{role.roleLibelle}}</p></div></div>
+                
+                <!-- <a  href="/Private/Admin/"> <i class="fa fa-edit text-edit"></i></a>  -->
+              </div>
+              <div class="col-md-8 right-border-custom">
+                <div class="card-body p-4"><form action="">
+                  <h6>Information <fa-icon (click)="process()" class="btn text-primary" [icon]="faEdit"></fa-icon></h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <h6>Email</h6>
+                      <p class="text-muted">{{User$.email}}</p>
+                    </div>
+                    <div class="col-6 mb-3">
+                      <h6>Phone</h6>
+                      <p class="text-muted phone">{{User$.phoneNumber}}</p>
+                    </div>
+                  </div>
+                  <h6>Description</h6>
+                  <hr class="mt-0 mb-4">
+                  <div class="row pt-1">
+                    <div class="col-6 mb-3">
+                      <p class="text-muted description">{{User$.description}}</p>
+                    </div>
+                    </div>
+                    <div class="row pt-1">
+                      <h5>Location</h5>
+                      <div class="col-6 mb-3">
+                        <p class="text-muted  location">{{User$.location}}</p>
+                      </div>
+                      </div>
+                    </form>
+                  <div class="d-flex align-items-center justify-content-between mt-3">
+                    <div class=" d-flex">
+                        <div *ngIf="false" class="col-auto m-2"><a href="#!"><i class="fa fa-facebook text-facebook"></i></a></div>
+                        <div class="col-auto m-2"><a href="#!"><i class="fa fa-twitter text-twitter"></i></a></div>
+                        <div class="col-auto m-2"><a href="#!"><i class="fa fa-instagram text-instagram"></i></a></div>
+                      </div>
+                      <div class="d-flex">
+                        <!-- <a routerLink="../User-lambda/Forfait-acheté">
+                            <div class="btn btn-primary m-2">
+                                Forfaits
+                          </div>
+                        </a> -->
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

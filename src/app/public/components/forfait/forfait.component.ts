@@ -47,7 +47,7 @@ export class ForfaitComponent implements OnInit {
   }
 
   getUserid(){
-    const id= this.route.snapshot.paramMap.get("user_id") ?? "no value";
+    const id= this.route.snapshot.paramMap.get("username") ?? "no value";
     this.CurrentUser$=this.common.formatUserId(id); 
   }
 
@@ -59,7 +59,7 @@ export class ForfaitComponent implements OnInit {
 
   async getCurrentForfaits(){
     const endpoint="UserForfaits";
-   const response= this.userForfaitApiQuery.getWithDetails(endpoint,this.CurrentUser$);
+   const response= this.userForfaitApiQuery.get(endpoint);
    this.Forfaits=await lastValueFrom(response);
   }
   

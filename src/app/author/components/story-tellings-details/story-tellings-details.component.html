@@ -20,7 +20,7 @@
             <div class="col-md-8 right-border-custom ">
               <div class="fancy-list">             
                  <div class="d-flex justify-content-end fancytexthover">
-                <span *ngIf="resultDetails$.finished" class="textwrapper m-1">Finished</span>
+                <span *ngIf="resultDetails$.finished " class="textwrapper m-1">Finished</span>
                 <span *ngIf="!resultDetails$.finished"  class=" textwrapper  m-1">Ongoing</span>
               </div>
               </div>
@@ -51,7 +51,7 @@
                     </div>
                     </div> -->
                 
-                <div class="d-flex align-items-center justify-content-between mt-3">
+                <div  *ngIf="isAuthor" class="d-flex align-items-center justify-content-between mt-3">
 <!--                   <div class=" d-flex">
                       <div *ngIf="false" class="col-auto m-2"><a href="#!"><i class="fa fa-facebook text-facebook"></i></a></div>
                       <div class="col-auto m-2"><a href="#!"><i class="fa fa-twitter text-twitter"></i></a></div>
@@ -66,10 +66,10 @@
                               Chapitres
                         </div>
                       </a>
-                      <a (click)="ChangeState()" class="ml-auto p-2">
+                      <a  *ngIf="!resultDetails$.finished"  (click)="ChangeState()" class="ml-auto p-2">
                         <div class="btn btn-primary m-2">
-                          <span *ngIf="!resultDetails$.finished" class=" m-1">Finish</span>
-                          <span *ngIf="resultDetails$.finished"  class="  m-1">Open</span>
+                          <span class=" m-1">Publish</span>
+                          <!-- <span *ngIf="resultDetails$.finished"  class="  m-1">Open</span> -->
                       </div>
                     </a>
                       </div>
@@ -93,7 +93,7 @@
             <div class="d-flex flex-column comment-section" *ngFor="let item of commentaires;let i=index">
                 <div class="bg-white p-2">
                     <div class="d-flex flex-row user-info">
-                        <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{(ResultUsers$[i]|async)?.username}}</span><span class="date text-black-50">Shared publicly - {{item.dateCreation}}</span></div>
+                        <div class="d-flex flex-column justify-content-start ml-2"><span class="d-block font-weight-bold name">{{(ResultUsers$[i]|async)?.username}}</span><span class="date text-black-50">Shared publicly - {{common.timeFormat(item.dateCreation)}}</span></div>
                     </div>
                     <div class="mt-2">
                         <p class="comment-text">{{item.commentaire}}</p>

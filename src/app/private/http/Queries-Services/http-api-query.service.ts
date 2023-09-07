@@ -23,7 +23,6 @@ getWithPagination(EndPoint:string,pgNumber:number):Observable<PaginatedItems<T>>
 return this.http.get<PaginatedItems<T>>(`${this.uri}${EndPoint}?pgNumber=${pgNumber}`);
 }
 getWithPaginationParams(EndPoint:string,parameter:HttpParams):Observable<PaginatedItems<T>>{
-  console.log(`${this.uri}${EndPoint}?`+parameter);
   return this.http.get<PaginatedItems<T>>(`${this.uri}${EndPoint}`,{
     params:parameter
   });
@@ -42,6 +41,7 @@ getWithDetailsParams(EndPoint:string,IdElement:string,parameter:HttpParams):Obse
     params:parameter
   });
 }
+
 
 getNoToken(EndPoint:string,IdElement:string){
   return this.clientSpec.get<T>(`${this.uri}${EndPoint}/${IdElement}`); 

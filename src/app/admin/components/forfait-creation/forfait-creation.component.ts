@@ -1,7 +1,7 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
@@ -18,15 +18,18 @@ export class ForfaitCreationComponent implements OnInit {
 
   ActionBtn:string="Save";
   ForfaitForm : FormGroup;
+  CurrentUser$:string;
 
   private Endpoint:string;
   result$:Observable<Result>;
    constructor(private formBuilder:FormBuilder,
      private forfaitCommandApi: HttpApiCommandService<Forfait>,
-      private router:Router
+      private router:Router,
+    private route:ActivatedRoute,
      ) { this.Endpoint="Forfait"}
  
      ngOnInit(): void {//changer le nom des proprietes
+      this.getUserid();
       this.ForfaitForm=this.formBuilder.group({
        forfaitLibelle:['',[Validators.required,Validators.maxLength(20)]],
        forfaitValue:['',[Validators.required,Validators.min(1)]],
@@ -36,13 +39,17 @@ export class ForfaitCreationComponent implements OnInit {
       });
     }
  
+    getUserid(){
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
+      this.CurrentUser$=id;
+    }
      onSubmit(){
      if(this.ForfaitForm.valid){
        this.result$=this.forfaitCommandApi.post(this.ForfaitForm.value,this.Endpoint);    
       let response=lastValueFrom(this.result$);
       response.then((res)=>{
       console.log(res);
-      this.router.navigate(['../Forfaits']);
+      this.router.navigate(['/Private/'+this.CurrentUser$+'/Admin/Forfaits']);
       })
      }
  

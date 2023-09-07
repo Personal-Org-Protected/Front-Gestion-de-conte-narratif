@@ -36,6 +36,7 @@ export class StoryTellModificationComponent implements OnInit {
  
      ngOnInit(): void {//changer le nom des proprietes
       this.Endpoint="StoryTelling"
+      this.getUserid();
       this.getIdStoryTell();
       this.getData(this.ParamRoute$);
       this.getTags(1);
@@ -43,7 +44,7 @@ export class StoryTellModificationComponent implements OnInit {
     }
 
     getUserid(){
-      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
       this.CurrentUser$=this.common.formatUserId(id); 
     }
 

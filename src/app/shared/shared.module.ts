@@ -8,17 +8,19 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { HttpHeaderInterceptor } from '../core/interceptors/http-header.interceptor';
-import {MatFormFieldModule} from '@angular/material/form-field'; 
-import {MatSelectModule} from '@angular/material/select'; 
+import {MatLegacyFormFieldModule as MatFormFieldModule} from '@angular/material/legacy-form-field'; 
+import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select'; 
 import {MatDatepickerModule} from '@angular/material/datepicker'; 
-import {MatRadioModule} from '@angular/material/radio'; 
+import {MatLegacyRadioModule as MatRadioModule} from '@angular/material/legacy-radio'; 
 import {MatDialogModule} from '@angular/material/dialog'; 
-import {MatPaginatorModule} from '@angular/material/paginator'; 
+import {MatLegacyPaginatorModule as MatPaginatorModule} from '@angular/material/legacy-paginator'; 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NotFoundExceptionComponent } from './components/exceptions/not-found-exception/not-found-exception.component';
 import { ForbiddenExceptionComponent } from './components/exceptions/forbidden-exception/forbidden-exception.component';
 import { ForbiddenOperationExceptionComponent } from './components/exceptions/forbidden-operation-exception/forbidden-operation-exception.component';
 import { ServerExceptionComponent } from './components/exceptions/server-exception/server-exception.component';
+import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ServerExceptionComponent } from './components/exceptions/server-excepti
   imports: [
     CommonModule,
     RouterModule,
-    
+    MatPaginatorModule,
+    FontAwesomeModule,
   ]
   ,exports:[
     ReactiveFormsModule,
@@ -50,7 +53,10 @@ import { ServerExceptionComponent } from './components/exceptions/server-excepti
     NotFoundExceptionComponent,
     ForbiddenExceptionComponent,
     ForbiddenOperationExceptionComponent,
-    ServerExceptionComponent
+    ServerExceptionComponent,
+    NgbRatingModule,
+    MatProgressSpinnerModule
+    
   ],
 
 })

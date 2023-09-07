@@ -32,6 +32,7 @@ export class UserCreationComponent implements OnInit {
     private userAuthApiCommand:HttpApiCommandService<User>,
     private userForfaitCommand:HttpApiCommandService<UpdateUser>,
     private userRoleCommand:HttpApiCommandService<UpdateUser>,
+    private basketApiCommand:HttpApiCommandService<UpdateUser>,
     private libraryCommandApi:HttpApiCommandService<Library>,
     private auth:AuthServicesService) { }
 
@@ -60,14 +61,6 @@ export class UserCreationComponent implements OnInit {
     });
   }
 
-  innitLibraryForm(){
-    this.LibraryForm=this.formBuilder.group({
-      nameLibrary:['Library of '+this.user_id,[Validators.required,Validators.minLength(1)]],
-      user_id:[this.user_id,[Validators.required,Validators.minLength(1)]]
-    });
-
-
-  }
 
 
 
@@ -81,7 +74,8 @@ export class UserCreationComponent implements OnInit {
      await this.addressDefaultForfait();
      await this.addressDefaultRole();
      await this.addressDefaultAuthRole(); 
-     await this.createLibrary();  
+     await this.createLibrary();
+     await this.createBasket();
       setTimeout(() => {
       this.auth.login();
      }, 800); 
@@ -96,7 +90,6 @@ export class UserCreationComponent implements OnInit {
       user_id:this.user_id
     });
     this.innitUserRoleForm();
-    this.innitLibraryForm();
    }
 
 
@@ -109,10 +102,18 @@ export class UserCreationComponent implements OnInit {
 
    async createLibrary(){
     const endpoint="Library";
-    const response= this.libraryCommandApi.PostNotoken(this.LibraryForm.value,endpoint);
+    const response= this.libraryCommandApi.PostNotoken(this.UserRoleForm.value,endpoint);
    const result=await lastValueFrom(response); 
    console.log(result);
    }
+
+   async createBasket(){
+    const endpoint="Basket";
+    const response=this.basketApiCommand.PostNotoken(this.UserRoleForm.value,endpoint);
+    const result = await lastValueFrom(response);
+    console.log(result);
+   }
+
   async createUser(){
     const response=this.userApiCommand.PostNotoken(this.UserForm.value,this.Endpoint);
     const result=await lastValueFrom(response);

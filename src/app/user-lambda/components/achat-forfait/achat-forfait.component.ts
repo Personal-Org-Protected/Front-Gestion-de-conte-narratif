@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
-import { ChangeForfait, UpdateUser } from 'src/app/private/models/Entity';
+import { ChangeForfait, Notification, UpdateUser } from 'src/app/private/models/Entity';
 import { ForfaitDto, RoleDto, userDisplay, UserForfaitVM, UserRolesVM } from 'src/app/private/models/EntityDto';
 import { CommonService } from 'src/app/private/services/common.service';
 
@@ -26,6 +26,8 @@ export class AchatForfaitComponent implements OnInit {
   Forfait:ForfaitDto;
   userForfaitForm:FormGroup;
   userRoleForm:FormGroup;
+  notifForm:FormGroup;
+
   constructor(
     private userInfoApiQuery:HttpApiQueryService<userDisplay>,
     private formBuilder:FormBuilder,
@@ -33,6 +35,7 @@ export class AchatForfaitComponent implements OnInit {
     private userForfaitApiCommand:HttpApiCommandService<ChangeForfait>,
     private userRoleApiCommand:HttpApiCommandService<UpdateUser>,
     private userRoleApiQueries:HttpApiQueryService<UserRolesVM>,
+    private notifApiCommand:HttpApiCommandService<Notification>,
     private route:ActivatedRoute,
     private router:Router,
     private common:CommonService,) { }
@@ -47,19 +50,26 @@ export class AchatForfaitComponent implements OnInit {
   }
 
   getUserid(){
-    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
     this.CurrentUser$=this.common.formatUserId(id); 
   }
 
-  innitForfaitForm(id:number){
+  innitForfaitForm(id:number){//modified
     this.userForfaitForm=this.formBuilder.group({
-      user_id:[this.CurrentUser$,[Validators.required,Validators.minLength(1)]],
+      
       idForfait: [id,[Validators.min(1)]]
     });
   }
-  innitRoleForm(){
+
+  innitRoleForm(id:number){//modified
     this.userRoleForm=this.formBuilder.group({
-      user_id:[this.CurrentUser$,[Validators.required,Validators.minLength(1)]],
+      idRole: [id,[Validators.min(1)]]
+    });
+  }
+  innitNotifForm(nom:string){//modified
+    this.notifForm=this.formBuilder.group({
+    title:['Achat de forfait'],
+    message:["Vous venez d'acheter le forfait "+nom] 
     });
   }
 
@@ -67,7 +77,7 @@ export class AchatForfaitComponent implements OnInit {
 
   async getUserRoles(){
     const endpoint="UserRoles"
-    const response=this.userRoleApiQueries.getWithDetails(endpoint,this.CurrentUser$);
+    const response=this.userRoleApiQueries.get(endpoint);
     this.roles=await lastValueFrom(response);
   }
   getid(){
@@ -80,67 +90,76 @@ export class AchatForfaitComponent implements OnInit {
   }
 
   async getCurrentUserInfo(){
-    const endpoint="User"
-const response=this.userInfoApiQuery.getWithDetails(endpoint,this.CurrentUser$);
+    const endpoint="User/Own"
+const response=this.userInfoApiQuery.get(endpoint);
 this.User=await lastValueFrom(response);
   }
 
 
 
-  async BuyForfait(id:number){
+  async BuyForfait(id:number,nom:string){//modified
      this.innitForfaitForm(id);
-        const endpoint="UserForfaits/Standard";
-      const response=this.userForfaitApiCommand.post(this.userForfaitForm.value,endpoint);
-      const result=await lastValueFrom(response);
-      console.log(result);
-     if(this.Forfait.roleId==3){
+     let idRole=this.Forfait.roleId;
+      await this.processForfait();
+
+     if(idRole==3){
+      this.innitRoleForm(idRole)
     await this.addressAuthorConfig();
-    } 
+    }
+     await this.createNotification(nom);
     setTimeout(() => {
       this.router.navigate(['/Private/'+this.CurrentUser$+'/User-lambda/Forfait-acheté']);
     }, 600); 
       }
 
-      
+      async createNotification(nom:string){
+        this.innitNotifForm(nom);
+        const endpoint="Notification";
+        const response=this.notifApiCommand.post(this.notifForm.value,endpoint);
+        await lastValueFrom(response);
+      }
+
+      async processForfait(){
+        const endpoint="UserForfaits/Standard";
+        const response=this.userForfaitApiCommand.post(this.userForfaitForm.value,endpoint);
+        await lastValueFrom(response);
+      }
 
      async addressAuthorConfig(){
         await this.giveRoleUser();
         await this.giveRoleAuth();
         if(this.roles.userRoles.find(t=>t.idRole==4)!=null)
         {
+          console.log("delete former author process ....");
         await this.deleteRoleUser(4);
-       await this.deleteRoleAuth(4);}
+        await this.deleteRoleAuth(4);
+       }
       }
-  async giveRoleUser(){
-    this.innitRoleForm();
+
+
+  async giveRoleUser(){//modified
     const endpoint="UserRoles/Author";
   const response=this.userRoleApiCommand.post(this.userRoleForm.value,endpoint);
   const result=await lastValueFrom(response);
   console.log(result);
   }
 
-  async giveRoleAuth(){
-    this.innitRoleForm();
-    const endpoint="UserAuth/Author";
+  async giveRoleAuth(){//modified
+  const endpoint="UserAuth/Author";
   const response=this.userRoleApiCommand.post(this.userRoleForm.value,endpoint);
   const result=await lastValueFrom(response);
   console.log(result);
   }
 
-  async deleteRoleUser(id:number){
-    const endpoint="UserRoles/Resiliate";
-    let params= new HttpParams();
-    params=params.append('roleId',id);
-    const response=this.userForfaitApiCommand.deleteWithParams(endpoint,this.CurrentUser$,params);
+  async deleteRoleUser(id:number){//modified
+    const endpoint="UserRoles/Resiliate/Own";
+    const response=this.userRoleApiCommand.delete(endpoint,id.toString());
     const result=await lastValueFrom(response);
     console.log(result);
     }
-    async deleteRoleAuth(id:number){
-      console.log("delte user auth")
-      const endpoint="UserAuth/Resiliate"
-      let params= new HttpParams();
-      params=params.append('roleId',id);
-      const response=this.userForfaitApiCommand.deleteWithParams(endpoint,this.CurrentUser$,params);
+    async deleteRoleAuth(id:number){//modified
+      const endpoint="UserAuth/Resiliate/Own"
+      const response=this.userRoleApiCommand.delete(endpoint,id.toString());
       const result=await lastValueFrom(response);
       console.log(result);
     }

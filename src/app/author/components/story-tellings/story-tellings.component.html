@@ -4,14 +4,15 @@
     <div class="w-75 tags vh-100">
         <a  *ngFor="let item of resultTag$.tags" class="my-2">
           <button *ngIf="item as tag" (click)="getStoryTell(tag.idTag)" class=" btn third"> 
-          {{item.nameTag}}
+            <p *ngIf="item.nameTag=='Default'">All</p>
+                <p *ngIf="item.nameTag!='Default'">{{item.nameTag}}</p>
         </button>
       </a>
     </div>
 </div>
   <div class='container py-4'>
-    <div class="" *ngIf="result$!=null">
-      <a routerLink="../Histoire-creation"><button class="btn third"> Create</button></a>
+    <div class="" *ngIf="result$!=null && isAuthor">
+      <a class="size btn third" routerLink="../Histoire-creation"> Create</a>
     </div>
       <div class='center list flex-column'>
         <div  *ngFor="let item of (result$|async)?.items;let i = index" class='card flex-row m-5' id="box{{i}}" (click)="onClickCard(i)">
@@ -28,13 +29,17 @@
             <div class='members'>
               <span class='current' *ngIf="item.numberRef>0">nombre d'achat : {{item.numberRef}}</span> 
               <span class='max'>{{item.price}} $</span>
+              <div class="d-flex">
+                <ngb-rating class="mx-2" [(rate)]="item.rating"  [readonly]="true"></ngb-rating><span>{{item.rating}}</span>
+              </div>
             </div>
-            <div class='hidden bottom d-flex'>
+            <div class='hidden bottom d-flex' *ngIf="isAuthor">
               <a routerLink="../Histoire-details/{{item.idStoryTelling}}" class='simple'>Check</a>
-              <a routerLink="../Histoire-modification/{{item.idStoryTelling}}" class='modify'>Update</a>
+              <a *ngIf="!(isBoughts[i]|async)?.isBought" (click)="delete(item.idStoryTelling)" class='modify'>Delete</a>
             </div>
           </div>
-          <div class="align-self-stretch">          <span *ngIf="!item.finished"  class="btn-flip" data-back="Ongoing" data-front="Status"></span>
+          <div class="align-self-stretch">          
+            <span *ngIf="!item.finished"  class="btn-flip" data-back="Ongoing" data-front="Status"></span>
             <span *ngIf="item.finished" class="btn-flip" data-back="Finished" data-front="State"></span></div>
         </div>
            

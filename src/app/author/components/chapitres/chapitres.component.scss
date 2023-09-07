@@ -23,18 +23,6 @@ img {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 /* ==== SOME BOOTSTRAP MODS/STYLING ==== */
 .btn-default {background-color: rgba(255,255,255,0.3); border-color:rgba(0,0,0,0.2);}
 .img-rounded, .btn, .label {border-radius: 6px;}
@@ -65,6 +53,7 @@ img {
   text-transform: uppercase;
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
+  justify-content: center;
 
   &:hover,
   &:focus {
@@ -77,11 +66,11 @@ img {
 .third {
 border-color:#23bdb8;
 color: #fff;
-box-shadow: 0 0 40px 40px #23bdb8 inset, 0 0 0 0 #23bdb8;
+box-shadow: 0 0 40px 40px #53bda6 inset, 0 0 0 0 #429e9b;
 transition: all 150ms ease-in-out;
 
 &:hover {
   border-radius: 1.5em;
-  box-shadow: 0 0 10px 0 #23bdb8 inset, 0 0 10px 4px #23bdb8;
+  box-shadow: 0 0 10px 0 #32fd97 inset, 0 0 10px 4px #168a86;
 }
 }

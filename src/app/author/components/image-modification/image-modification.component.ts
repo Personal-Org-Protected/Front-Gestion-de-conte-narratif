@@ -46,7 +46,7 @@ export class ImageModificationComponent implements OnInit {
 
 
     getUserid(){
-      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+      const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
       this.CurrentUser$=this.common.formatUserId(id); 
     }
 

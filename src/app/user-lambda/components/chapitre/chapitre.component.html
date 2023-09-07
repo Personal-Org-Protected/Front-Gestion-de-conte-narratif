@@ -1,17 +1,36 @@
-<section class=" vh-100 background p-5">
-    <div class="container d-flex justify-content-center ">
+
+<section class=" vh-100 background  d-flex  justify-content-between">
+    <div (click)="pannelDisplay()" class="m-3 btn filter"><fa-icon [icon]="faFilter"></fa-icon></div>
+    <div class="container p-2 mb-2 alignment ">
+        <div class="w-100 d-flex justify-content-end "><fa-icon class="btn" (click)="pannelDiseapear()" [icon]="faCross"></fa-icon></div>
+        <div class="w-100 d-flex justify-content-center">
+            <input class="dark-light" type="checkbox" id="dark-light" name="dark-light"/>
+
+            <div class="sec-center"> 	
+                <input class="dropdown" type="checkbox" id="dropdown" name="dropdown"/>
+                <label class="for-dropdown d-flex justify-content-between p-3" for="dropdown"><fa-icon [icon]="faLanguage"></fa-icon>Language Menu <i class="uil uil-arrow-down"></i></label>
+                <div class="section-dropdown text-light"> 
+                    <a  routerLinkActive="active" (click)="default()"  >Default <i class="uil uil-arrow-right"></i></a>
+                    <a  routerLinkActive="active" (click)="translate('fr')"  >French <i class="uil uil-arrow-right"></i></a>
+                    <a routerLinkActive="active" (click)="translate('en')"  >English <i class="uil uil-arrow-right"></i></a>
+                    <a routerLinkActive="active" (click)="translate('nl')" >Dutch <i class="uil uil-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+     </div>
+    <div class="container d-flex justify-content-center p-5">
         <div class="row">
             <button class="book" >
                 <div class="text" >
-                 <h1 *ngIf="(resultChapter$|async)?.order==1">Prologue</h1>
-                 <h3 id="title" class="title-display"> {{(resultStory$|async)?.nomStory}}</h3>
+                 <h1 *ngIf="(resultChapter$|async)?.order==1">{{Intro}}</h1>
+                 <h3 id="title" class="title-display"> {{Titre}}</h3>
                  <h2>Chapter {{(resultChapter$|async)?.order}}</h2>
                     <p id="content">
-                       {{(resultStory$|async)?.textStory}} 
+                       {{Text}} 
                     </p> 
                 </div>
                </button>
         </div>
 
     </div>
-</section>
+</section> 

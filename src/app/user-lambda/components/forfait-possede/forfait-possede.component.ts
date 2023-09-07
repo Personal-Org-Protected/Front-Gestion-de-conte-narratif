@@ -19,6 +19,7 @@ export class ForfaitPossedeComponent implements OnInit {
   faEye=faEye;
   faStop=faStop;
   userRoleForm:FormGroup;
+  userForfaitForm:FormGroup;
   result$:Observable<UserForfaitVM>;
   ForfaitUser:UserForfaitVM;
   private ParamRoute$:string;
@@ -34,24 +35,25 @@ export class ForfaitPossedeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.Endpoint="UserForfaits";
     this.getUserid();
-//this.CurrentUser$="UserLambda_270b7c19-1968-4920-970a-e3deed612cb3";
     await this.getUserForfait();
   }
 
   getUserid(){
-    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
+    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
     this.CurrentUser$=this.common.formatUserId(id); 
   }
 
   async getUserForfait(){
-  const response = this.forfaitUserApiQuery.getWithDetails(this.Endpoint,this.CurrentUser$);
+  const response = this.forfaitUserApiQuery.get(this.Endpoint);
   this.ForfaitUser=await lastValueFrom(response) as UserForfaitVM;
   }
 
 
-  async resiliate(id:number,roleId:number){
-    await this.resiliateProcess(id);
+  async resiliate(id:number,roleId:number){//modified
+    this.innitRoleForm(roleId);
+    this.innitForfaitForm(1);
     if(roleId==3){
+      await this.resiliateProcess(id);
       await this.deleteRoleUser(roleId);
       await this.deleteRoleAuth(roleId);
       await this.giveRoleUser();
@@ -59,44 +61,41 @@ export class ForfaitPossedeComponent implements OnInit {
     }
 
     if(roleId==2){
-      console.log("lambda")
-    await this.giveDefault();}
+    await this.processForfait();}
 
    await this.getUserForfait();
   }
 
-  async resiliateProcess(id:number){
-    const endpoint="UserForfaits"
-    let params= new HttpParams();
-    params=params.append('idForfait',id);
-    const response=this.userForfaitApiCommand.deleteWithParams(endpoint,this.CurrentUser$,params);
+  async resiliateProcess(id:number){//modified
+    const endpoint="UserForfaits/Resiliate"
+    const response=this.userForfaitApiCommand.delete(endpoint,id.toString());
     const result=await lastValueFrom(response);
     console.log(result);
   }
 
 
-async giveDefault(){
-  this.innitRoleForm();
+async giveDefault(){//modfied
   const endpoint="UserForfaits/Default";
 const response=this.userForfaitApiCommand.post(this.userRoleForm.value,endpoint);
 const result=await lastValueFrom(response);
 console.log(result);
 }
 
-async deleteRoleUser(id:number){
-const endpoint="UserRoles/Resiliate";
-let params= new HttpParams();
-params=params.append('roleId',id);
-const response=this.userForfaitApiCommand.deleteWithParams(endpoint,this.CurrentUser$,params);
+async processForfait(){
+  const endpoint="UserForfaits/Standard";
+  const response=this.userForfaitApiCommand.post(this.userForfaitForm.value,endpoint);
+  await lastValueFrom(response);
+}
+
+async deleteRoleUser(id:number){//modified
+const endpoint="UserRoles/Resiliate/Own";
+const response=this.userRoleApiCommand.delete(endpoint,id.toString());
 const result=await lastValueFrom(response);
 console.log(result);
 }
-async deleteRoleAuth(id:number){
-  console.log("delte user auth")
-  const endpoint="UserAuth/Resiliate"
-  let params= new HttpParams();
-  params=params.append('roleId',id);
-  const response=this.userForfaitApiCommand.deleteWithParams(endpoint,this.CurrentUser$,params);
+async deleteRoleAuth(id:number){//modified
+  const endpoint="UserAuth/Resiliate/Own"
+  const response=this.userRoleApiCommand.delete(endpoint,id.toString());
   const result=await lastValueFrom(response);
   console.log(result);
 }
@@ -107,14 +106,21 @@ async deleteRoleAuth(id:number){
 
 
 
-innitRoleForm(){
+innitRoleForm(roleId:number){
   this.userRoleForm=this.formBuilder.group({
-    user_id:[this.CurrentUser$,[Validators.required,Validators.minLength(1)]],
+    idRole: [roleId,[Validators.min(1)]]
+  });
+
+}
+
+innitForfaitForm(id:number){//modified
+  this.userForfaitForm=this.formBuilder.group({
+    
+    idForfait: [id,[Validators.min(1)]]
   });
 }
 
 async giveRoleUser(){
-  this.innitRoleForm();
   const endpoint="UserRoles/FormerAuthor";
 const response=this.userRoleApiCommand.post(this.userRoleForm.value,endpoint);
 const result=await lastValueFrom(response);
@@ -122,7 +128,6 @@ console.log(result);
 }
 
 async giveRoleAuth(){
-  this.innitRoleForm();
   const endpoint="UserAuth/FormerAuthor";
 const response=this.userRoleApiCommand.post(this.userRoleForm.value,endpoint);
 const result=await lastValueFrom(response);

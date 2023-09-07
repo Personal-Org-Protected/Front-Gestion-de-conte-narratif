@@ -1,16 +1,16 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { ActivatedRoute } from '@angular/router';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
 import { PaginatedItems } from 'src/app/private/models/Common';
 import { Chapitre, Commentary, Idea } from 'src/app/private/models/Entity';
-import { ChapitreDto, CommentaryDto, IdeaDto, ImageDto, StoryDto } from 'src/app/private/models/EntityDto';
+import { ChapitreDto, CommentaryDto, HasBeenBoughtDto, IdeaDto, ImageDto, StoryDto } from 'src/app/private/models/EntityDto';
 import { CommonService } from 'src/app/private/services/common.service';
-import {faTrash,faEye,faCloud,faEdit} from '@fortawesome/free-solid-svg-icons'
+import {faTrash,faEye,faArrowUp,faArrowDown} from '@fortawesome/free-solid-svg-icons'
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog'
 import { DialogImageChoiceComponent } from '../dialog-image-choice/dialog-image-choice.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -22,9 +22,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ChapitresComponent implements OnInit {
 
+  faArrowUp=faArrowUp;
+  faArrowDown=faArrowDown;
+  lock:HasBeenBoughtDto | undefined;
   private currentPage:number;
   private Endpoint$:string;
   private ChapitreForm:FormGroup;
+  private ChapitreOrderForm:FormGroup
    ParamRoute$:string;
   result$:Observable<PaginatedItems<ChapitreDto>>;
 Chapters:Array<ChapitreDto>
@@ -40,9 +44,10 @@ Chapters:Array<ChapitreDto>
     private chapitreApiCommand:HttpApiCommandService<Chapitre>,
     private imageApiQuery:HttpApiQueryService<ImageDto>,
     private storyApiQuery:HttpApiQueryService<StoryDto>,
+    private storyTellApiQuery:HttpApiQueryService<HasBeenBoughtDto>,
     private service:CommonService,
     private route:ActivatedRoute,
-     private common:CommonService,
+    public common:CommonService,
     public dialog: MatDialog,
     private formBuilder:FormBuilder) { }
 
@@ -51,8 +56,9 @@ Chapters:Array<ChapitreDto>
     
       this.currentPage=1;
       this.Endpoint$="Chapitre";
-      this.getUserid();
+      //this.getUserid();
       this.getIdStoryTell();
+      await this.isStoryTellChangeable();
        await this.getChapters(this.ParamRoute$,1);
     }
 
@@ -66,6 +72,13 @@ innitform(id:number,idImage:number){
   this.ChapitreForm=this.formBuilder.group({
     idChapitre:[id,[Validators.required,Validators.min(1)]],
     idImage:[idImage,[Validators.required,Validators.min(1)]],
+  })
+}
+innitOrderform(story:number,id:number,order:number){
+  this.ChapitreOrderForm=this.formBuilder.group({
+    idStory:[story,[Validators.required,Validators.min(1)]],
+    idChapitre:[id,[Validators.required,Validators.min(1)]],
+    order:[order,[Validators.required,Validators.min(1)]],
   })
 }
 
@@ -136,25 +149,35 @@ innitform(id:number,idImage:number){
 
 
   async openDialog(id:number){
-    const dialogRef =this.dialog.open(DialogImageChoiceComponent,{
-      data:this.CurrentUser$
-    });
+    if(!this.lock!.isBought){
+    const dialogRef =this.dialog.open(DialogImageChoiceComponent);
 
    const choice= await lastValueFrom(dialogRef.afterClosed());
    const newImage=choice.image as ImageDto;
-   await this.updateChapter(id,newImage.idImage);
+   await this.updateChapter(id,newImage.idImage);}
   }
 
 async updateChapter(id:number,idImage:number){
     this.innitform(id,idImage);
     const response=this.chapitreApiCommand.put(this.ChapitreForm.value,this.Endpoint$,id.toString());
     const result=await lastValueFrom(response);
-    console.log(result);
     this.getChapters(this.ParamRoute$,this.currentPage);  
   }
 
 
+async changeOrder(story:number,id:number,order:number){
+  this.innitOrderform(story,id,order);
+const endpoint="Chapitre/order";
+const response=this.chapitreApiCommand.put(this.ChapitreOrderForm.value,endpoint,id.toString());
+const result=await lastValueFrom(response);
+this.getChapters(this.ParamRoute$,this.currentPage);  
+}
 
+async isStoryTellChangeable(){
+  const endpoint="StoryTelling/hasBeenBought"
+  const response=this.storyTellApiQuery.getWithDetails(endpoint,this.ParamRoute$);
+ this.lock= await lastValueFrom(response);
+}
 
   handlePageEvent(event:PageEvent){
     this.currentPage=event.pageIndex+1

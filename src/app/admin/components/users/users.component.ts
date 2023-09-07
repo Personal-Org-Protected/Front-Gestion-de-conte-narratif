@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
@@ -18,6 +18,7 @@ import { HasBeenBoughtDto, IsRoleDto, StoryTellingDto, userDisplay, UserRolesDto
 })
 export class UsersComponent implements OnInit {
 
+  isLoading:boolean;
   private Endpoint:string;
   private pgNumber:number;
   userRoleForm:FormGroup;
@@ -34,6 +35,7 @@ export class UsersComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.isLoading=true;
     await this.getUsers(this.pgNumber);
   }
 
@@ -54,6 +56,7 @@ this.router.navigate(['User-details',user_id]);
 getRoleById(){
   this.Roles$=new Array<Observable<IsRoleDto>>();
 this.Users$.items.forEach(m=>this.isAlreadyAdmin(m.user_id));
+this.isLoading=false;
 }
 async isAlreadyAdmin(user_id:string){
   const endpoint="UserRoles/isAdmin"
@@ -93,7 +96,6 @@ async giveRoleUser(user_id:string){
   const endpoint="UserRoles/Admin";
 const response=this.userRoleCommandApi.post(this.userRoleForm.value,endpoint);
 const result=await lastValueFrom(response);
-console.log(result);
 }
 
 async giveRoleAuth(user_id:string){
@@ -101,7 +103,6 @@ async giveRoleAuth(user_id:string){
   const endpoint="UserAuth/Admin";
 const response=this.userRoleCommandApi.post(this.userRoleForm.value,endpoint);
 const result=await lastValueFrom(response);
-console.log(result);
 }
 
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TranslatorService } from 'src/app/private/http/General-Services/translator.service';
 
 @Component({
   selector: 'app-project',

@@ -16,12 +16,12 @@ const routes: Routes = [
   {path:''
   ,children:[
     {path:"Library", component:BibliothequeComponent},
-    {path:'Lecture/:idBox',component:LireComponent},
-    {path:'livre',component:LivreAfficheComponent},
+    {path:'Lecture/:id',component:LireComponent},
+    {path:'livre/:id',component:LivreAfficheComponent},
     {path:'Chapitres-liste/:id',component:ChapitresComponent},
     {path:'Chapitre-details/:id',component:ChapitreComponent},
     {path:'Store-Librairie',component:StoreComponent},
-    {path:'Transaction-process/:id',component:TransactionProcessComponent},
+    {path:'Transaction-process',component:TransactionProcessComponent},
     {path:'Transactions-liste',component:TransactionComponent},
     {path:'Forfait-acheté', component:ForfaitPossedeComponent},
     {path:'Forfait-achat/:id', component:AchatForfaitComponent}

@@ -9,7 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { PublicHomeComponent } from './components/public-home/public-home.component'; 
 import {MatButtonModule} from '@angular/material/button';
 
-import {MatSelectModule} from '@angular/material/select';
+import {MatLegacySelectModule as MatSelectModule} from '@angular/material/legacy-select';
 import { ModusOperandiComponent } from './components/modus-operandi/modus-operandi.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ContactComponent } from './components/contact/contact.component';

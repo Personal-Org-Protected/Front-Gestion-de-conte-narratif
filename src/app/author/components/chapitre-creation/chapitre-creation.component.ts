@@ -3,7 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable } from 'rxjs';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
@@ -60,8 +60,8 @@ export class ChapitreCreationComponent implements OnInit {
   }
 
   getUserid(){
-    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("user_id") ?? "no value";
-    this.CurrentUser$=this.common.formatUserId(id); 
+    const id= this.route.parent?.parent?.parent?.snapshot.paramMap.get("username") ?? "no value";
+    this.CurrentUser$=id; 
   }
   getIdStoryTell(){
     this.ParamRoute$ = this.route.snapshot.paramMap.get('id')?? "No value";

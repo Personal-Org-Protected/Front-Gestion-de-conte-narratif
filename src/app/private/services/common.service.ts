@@ -6,15 +6,16 @@ import { nameof } from 'ts-simple-nameof';
 })
 export class CommonService {
 
+  private date:Date;
   constructor() { }
 
  nameof(value:any){
    return nameof(value);
 }
 
-
-setParameters(){
-  
+timeFormat(rawTime:Date){
+  this.date=new Date(rawTime);
+  return this.date.toLocaleDateString();
 }
 
 

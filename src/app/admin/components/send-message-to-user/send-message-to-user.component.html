@@ -1,0 +1,18 @@
+<form [formGroup]="NotifForm">
+    <h1 mat-dialog-title>Ideas :</h1>
+    <div class="text-danger"  mat-dialog-content>
+      <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" formControlName="title">
+          </div>
+         
+          <div>
+            <label for="message">Message</label>
+            <input type="message" id="Forfait_value" name="message" formControlName="message">
+          </div>
+    </div>
+    <div mat-dialog-actions>
+        <button  (click)="submit()" [disabled]="NotifForm.invalid"><fa-icon class="btn" [icon]="faAdd"></fa-icon></button>
+    </div>
+    </form>
+    

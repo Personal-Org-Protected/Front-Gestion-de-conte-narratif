@@ -30,8 +30,11 @@
     <section class="background vh-100 ">
       <div class="courses-container">
         <div class="d-flex course">
-          <div  *ngIf="StoryBoxe.facade.url!=null" class="course-preview" [ngStyle]="{'background-image': 'url('+StoryBoxe.facade.url+')'}">
+          <!-- <div  *ngIf="StoryBoxe.facade.url!=null" class="course-preview" [ngStyle]="{'background-image': 'url('+StoryBoxe.facade.url+')'}">
 
+          </div> -->
+          <div  *ngIf="StoryBoxe.facade.url!=null" class="course-preview" >
+            <img [src]="StoryBoxe.facade.url" alt="no image">
           </div>
           <div *ngIf="StoryBoxe.facade.url==null" class="course-preview" [ngStyle]="{'background-image': 'url(src/assetsimages/question-mark-black-monochrome-white.png)'}">
 
@@ -39,9 +42,14 @@
           <div class="course-info">
 
               <div class="Desciption d-flex flex-column">
+                <div class="d-flex justify-content-between">
                 <h1 class="p-2">
                     {{StoryBoxe.facade.nameStory}}
                 </h1>
+                <div class="h-25 d-inline-block" style="width: 150px; background-color: rgba(0,0,255,.1)">                
+                  <ngb-rating class="py-2 px-3 "  (leave)="selectRate()" [(rate)]="selected" [max]="5"></ngb-rating><span>{{Rating.totalRate}}/5</span>
+                </div>
+              </div>
                   <span class="synopsis p-2">
                     <p>
                       {{StoryBoxe.facade.sypnopsis}}

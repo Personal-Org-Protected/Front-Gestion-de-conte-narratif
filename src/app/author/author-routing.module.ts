@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IsAuthorGuard } from '../core/guards/is-author.guard';
 import { AuthorComponent } from './author.component';
 import { ChapitreCreationComponent } from './components/chapitre-creation/chapitre-creation.component';
 import { ChapitreViewComponent } from './components/chapitre-view/chapitre-view.component';
@@ -14,24 +15,26 @@ import { StoryTellCreationComponent } from './components/story-tell-creation/sto
 import { StoryTellModificationComponent } from './components/story-tell-modification/story-tell-modification.component';
 import { StoryTellingsDetailsComponent } from './components/story-tellings-details/story-tellings-details.component';
 import { StoryTellingsComponent } from './components/story-tellings/story-tellings.component';
+import { AuthorAccessGuard } from '../core/guards/author-access.guard';
 
 const routes: Routes = [
 {path:'',
 children:[
   {path:'Histoires',component:StoryTellingsComponent},
-  {path:'Histoire-details/:id',component:StoryTellingsDetailsComponent},
-  {path:'Histoire-creation',component:StoryTellCreationComponent},
-  {path:'Histoire-modification/:id',component:StoryTellModificationComponent},
-  {path:'Chapitres/:id',component:ChapitresComponent},
-  {path:'Chapitre-view/:id',component:ChapitreViewComponent},
-  {path:'Chapitre-creation/:id',component:ChapitreCreationComponent},
-  {path:'Story-creation',component:StoryCreationComponent},
-  {path:'Story-modification/:id',component:StoryModificationComponent},
+  {path:'Histoire-details/:id',component:StoryTellingsDetailsComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Histoire-creation',component:StoryTellCreationComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Histoire-modification/:id',component:StoryTellModificationComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Chapitres/:id',component:ChapitresComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Chapitre-view/:id',component:ChapitreViewComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Chapitre-creation/:id',component:ChapitreCreationComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Story-creation',component:StoryCreationComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Story-modification/:id',component:StoryModificationComponent,canActivate:[AuthorAccessGuard]},
   {path:'Images-librairie',component:ImagesComponent},
-  {path:'Images-creation',component:ImageCreationComponent},
-  {path:'Images-modification/:id',component:ImageModificationComponent},
+  {path:'Images-creation',component:ImageCreationComponent,canActivate:[AuthorAccessGuard]},
+  {path:'Images-modification/:id',component:ImageModificationComponent,canActivate:[AuthorAccessGuard]},
   {path:'Images-ai-librairie',component:ImagesAIComponent}
-]}
+],canActivate:[IsAuthorGuard]
+}
 
 ];
 

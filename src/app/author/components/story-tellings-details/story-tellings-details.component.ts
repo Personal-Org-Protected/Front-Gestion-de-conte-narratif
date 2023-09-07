@@ -2,17 +2,17 @@ import { ObserversModule } from '@angular/cdk/observers';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit,Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PageEvent } from '@angular/material/paginator';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable,lastValueFrom, Subject, last } from 'rxjs';
 import { HttpApiCommandService } from 'src/app/private/http/Command-Services/http-api-command.service';
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
 import { PaginatedItems, Result } from 'src/app/private/models/Common';
 import { Commentary, Idea, StoryTelling } from 'src/app/private/models/Entity';
-import { ChapitreDto, CommentaryDto, IdeaDto, IdeaVM, ImageDto, StoryDto, StoryTellingDto, TagDto, userDisplay } from 'src/app/private/models/EntityDto';
+import { ChapitreDto, CommentaryDto, IdeaDto, IdeaVM, ImageDto, IsRoleDto, StoryDto, StoryTellingDto, TagDto, userDisplay } from 'src/app/private/models/EntityDto';
 import { CommonService } from 'src/app/private/services/common.service';
 import {faTrash,faEye,faCloud,faEdit} from '@fortawesome/free-solid-svg-icons'
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog'
 import { DialogIdeaElementsComponent } from '../dialog-idea-elements/dialog-idea-elements.component';
 @Component({
   selector: 'app-story-tellings-details',
@@ -39,6 +39,7 @@ export class StoryTellingsDetailsComponent implements OnInit {
   faEye=faEye;
   faCloud=faCloud;
   faEdit=faEdit;
+  isAuthor:boolean;
   constructor(private formBuilder:FormBuilder,
     private StoryTellApiQuery:HttpApiQueryService<StoryTellingDto>,
     private StoryTellCommandQuery:HttpApiCommandService<StoryTelling>,
@@ -46,9 +47,10 @@ export class StoryTellingsDetailsComponent implements OnInit {
     private userApiQuery:HttpApiQueryService<userDisplay>,
     private tagApiQuery:HttpApiQueryService<TagDto>,
     private commentaryApiCommand:HttpApiCommandService<Commentary>,
+    private userRolesApiQuery:HttpApiQueryService<IsRoleDto>,
     private route:ActivatedRoute,
     public dialog: MatDialog,
-    private common:CommonService,
+    public common:CommonService,
   ) {}
 
  async ngOnInit(): Promise<void> {
@@ -61,6 +63,7 @@ export class StoryTellingsDetailsComponent implements OnInit {
     this.idZone= this.resultDetails$.idZone;
     await this.initForm();
     await this.getCommentaries(1,this.idZone);
+    await this.userAuthor();
   }
 
   getUserid(){
@@ -68,15 +71,14 @@ export class StoryTellingsDetailsComponent implements OnInit {
     this.CurrentUser$=this.common.formatUserId(id); 
   }
 
-  async openDialog(){
+   async openDialog(){
   this.dialog.open(DialogIdeaElementsComponent,{
     data:this.resultDetails$.idStoryTelling
   });
-  }
+  } 
 
-    async initForm(){
+    async initForm(){//modified
     this.CommentaryForm =  this.formBuilder.group({
-      user_id:[this.CurrentUser$,[Validators.required,Validators.minLength(1)]],
       commentaire: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(200)]],
       idZone: [this.idZone,[Validators.required]]
     });
@@ -89,8 +91,7 @@ export class StoryTellingsDetailsComponent implements OnInit {
      let response= await lastValueFrom(this.result$);
      console.log(response);
      await this.getCommentaries(pgNumber,idZone);
-     // await this.getUsersId();
-    
+    this.resetPage();
     }  
 
    }
@@ -162,7 +163,7 @@ const endpoint="Commentary/Like"
 const response=this.commentaryApiCommand.putSpec(endpoint,id.toString());
 await lastValueFrom(response).then((res)=>{
 console.log(res);
- this.getCommentaries(1,this.idZone);
+ this.getCommentaries(this.currentPage,this.idZone);
 });
 }
 signalButton(id:number){
@@ -195,13 +196,7 @@ signalButton(id:number){
 
 
   async ChangeState(){
-    if(this.resultDetails$.finished){
-      await this.ongoingState();
-    }
-    else{
-      console.log("finish")
       await this.finishState();
-    }
   }
 
   async ongoingState(){
@@ -223,4 +218,10 @@ signalButton(id:number){
   isFinished(){
   
   }
+  async userAuthor(){
+    const endpoint="UserRoles/isAuthor"
+    const response=this.userRolesApiQuery.get(endpoint);
+    const result=await lastValueFrom(response);
+    this.isAuthor=result.isRole;
+   }
 }
