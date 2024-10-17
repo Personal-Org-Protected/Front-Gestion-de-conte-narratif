@@ -45,7 +45,7 @@
               <a class="nav-link" routerLink="Public/forfait/{{username}}" routerLinkActive="Active" *ngIf="(auth.getStateConnection()|async)">Forfait</a>
             </li>
 
-            <li  class="nav-item" *ngIf="isUserLambda()">
+            <li  class="nav-item" >
               <div class="dropdown">
                 <a
                 class="btn dropdown-toggle"
@@ -77,7 +77,7 @@
             </li>
 
 
-                  <li class="nav-item" *ngIf="isAuthor()">
+                  <li class="nav-item">
               <div class="dropdown">
                 <a
                 class="btn dropdown-toggle"

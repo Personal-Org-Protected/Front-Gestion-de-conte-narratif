@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthServicesService } from 'src/app/core/auth/auth-services.service';
 import{firstValueFrom, lastValueFrom, Observable} from 'rxjs'
 import { HttpApiQueryService } from 'src/app/private/http/Queries-Services/http-api-query.service';
-import { NotificationDto, UserRolesDto, UserRolesVM } from 'src/app/private/models/EntityDto';
+import { IsRoleDto, NotificationDto } from 'src/app/private/models/EntityDto';
 import { User } from '@auth0/auth0-angular';
 import { CommonService } from 'src/app/private/services/common.service';
 import {faBasketShopping,faArrowLeft,faArrowRight} from '@fortawesome/free-solid-svg-icons'
@@ -23,14 +23,14 @@ export class NavbarComponent implements OnInit {
   faBasketShopping=faBasketShopping;
   faArrowLeft=faArrowLeft;
   faArrowRight=faArrowRight;
-  Roles!:Array<UserRolesDto>;
+  Roles!:boolean;
  user_id!:string;
  username!:string;
  countBasket:Observable<number>;
  countNotif:Observable<number>;
  private  Endpoint!:string;
   constructor(public auth:AuthServicesService,
-    private userRoleApiQuery:HttpApiQueryService<UserRolesVM>,
+    private userRoleApiQuery:HttpApiQueryService<IsRoleDto>,
     private countApiQuery:HttpApiQueryService<number>,
     private notifApiQuery:HttpApiQueryService<PaginatedItems<NotificationDto>>,
     private notifApiCommand:HttpApiCommandService<NotificationDto>,
@@ -39,12 +39,11 @@ export class NavbarComponent implements OnInit {
     async ngOnInit(): Promise<void> {
     this.currentPage=1;
     this.Endpoint="UserRoles";
-    this.Roles= new Array<UserRolesDto>;
+    this.Roles= false
    await  this.getIdUser();
    await this.getUsername();
    await this.getUserRoles();
-   if(this.isUserLambda()){
-   await this.getCountBasket();}
+    await this.getCountBasket();
    await this.getCountNotif();
    await this.getNotifications();
   }
@@ -64,9 +63,9 @@ export class NavbarComponent implements OnInit {
 
  async getUserRoles(){
   const user_id=this.common.formatUserId(this.user_id);
-  const response=this.userRoleApiQuery.getWithDetails(this.Endpoint,user_id);
- const result=await lastValueFrom(response);
-  this.Roles=result.userRoles;
+  let response = this.userRoleApiQuery.get(this.Endpoint);
+  const result= await lastValueFrom(response);
+  this.Roles=result.isRole;
 }
 
    login(){
@@ -77,23 +76,12 @@ export class NavbarComponent implements OnInit {
     this.auth.logout();
   }
 
-  isAuthor(){
-    const role=this.Roles.find(t=>t.idRole===3 || t.idRole==4);
-    if(role==null)return false;
-    return true;
+
+  isAdmin(){;
+  if(!this.Roles)return false;
+  return true;
   }
 
-  isAdmin(){
-const role=this.Roles.find(t=>t.idRole===1);
-if(role==null)return false;
-return true;
-  }
-
-  isUserLambda(){
-    const role=this.Roles.find(t=>t.idRole===2);
-    if(role==null)return false;
-    return true;
-  }
 
   async getCountBasket(){
     const endpoint="BasketItem/count";

@@ -179,41 +179,11 @@ export interface userDisplay{
 }
 
 
-export interface RoleDto{
-      idRole :number
-      roleLibelle:string
-}
-
-export interface UserRolesDto{
-   idRole :number
-   roleLibelle :string
-}
-
-export interface UserRolesVM{
-      userRoles:Array<UserRolesDto>
-}
-
 export interface IsRoleDto{
       isRole:boolean
       id:number
 }
 
-export interface HaveForfaitDto{
-      haveForfait :boolean
-      currentForfait: number
-}
-
-
-export interface UserForfaitDto{
-      idForfait :number
-        forfaitLibelle :string
-        forfaitValue :number
-         reduction :number
-         roleId:number
-}
-export interface UserForfaitVM{
-      userForfaits:Array<UserForfaitDto>
-}
 
 export interface HasBeenBoughtDto
 {
